@@ -6,14 +6,14 @@ package client
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // UpdateClientReader is a Reader for the UpdateClient structure.
@@ -24,44 +24,38 @@ type UpdateClientReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateClientReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateClientOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateClientBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewUpdateClientUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewUpdateClientForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateClientNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /client/{id}] updateClient", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewUpdateClientOK() *UpdateClientOK {
 	return &UpdateClientOK{}
 }
 
-/*UpdateClientOK handles this case with default header values.
+/*
+UpdateClientOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type UpdateClientOK struct {
 	Payload *models.Client
 }
 
+// IsSuccess returns true when this update client o k response has a 2xx status code
+func (o *UpdateClientOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update client o k response has a 3xx status code
+func (o *UpdateClientOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update client o k response has a 4xx status code
+func (o *UpdateClientOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update client o k response has a 5xx status code
+func (o *UpdateClientOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update client o k response a status code equal to that given
+func (o *UpdateClientOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the update client o k response
+func (o *UpdateClientOK) Code() int {
+	return 200
+}
+
 func (o *UpdateClientOK) Error() string {
-	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientOK %s", 200, payload)
+}
+
+func (o *UpdateClientOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientOK %s", 200, payload)
+}
+
+func (o *UpdateClientOK) GetPayload() *models.Client {
+	return o.Payload
 }
 
 func (o *UpdateClientOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -99,7 +134,8 @@ func NewUpdateClientBadRequest() *UpdateClientBadRequest {
 	return &UpdateClientBadRequest{}
 }
 
-/*UpdateClientBadRequest handles this case with default header values.
+/*
+UpdateClientBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -107,8 +143,48 @@ type UpdateClientBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update client bad request response has a 2xx status code
+func (o *UpdateClientBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update client bad request response has a 3xx status code
+func (o *UpdateClientBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update client bad request response has a 4xx status code
+func (o *UpdateClientBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update client bad request response has a 5xx status code
+func (o *UpdateClientBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update client bad request response a status code equal to that given
+func (o *UpdateClientBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update client bad request response
+func (o *UpdateClientBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateClientBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientBadRequest %s", 400, payload)
+}
+
+func (o *UpdateClientBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientBadRequest %s", 400, payload)
+}
+
+func (o *UpdateClientBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateClientBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -128,7 +204,8 @@ func NewUpdateClientUnauthorized() *UpdateClientUnauthorized {
 	return &UpdateClientUnauthorized{}
 }
 
-/*UpdateClientUnauthorized handles this case with default header values.
+/*
+UpdateClientUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -136,8 +213,48 @@ type UpdateClientUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update client unauthorized response has a 2xx status code
+func (o *UpdateClientUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update client unauthorized response has a 3xx status code
+func (o *UpdateClientUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update client unauthorized response has a 4xx status code
+func (o *UpdateClientUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update client unauthorized response has a 5xx status code
+func (o *UpdateClientUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update client unauthorized response a status code equal to that given
+func (o *UpdateClientUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update client unauthorized response
+func (o *UpdateClientUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateClientUnauthorized) Error() string {
-	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateClientUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateClientUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateClientUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -157,7 +274,8 @@ func NewUpdateClientForbidden() *UpdateClientForbidden {
 	return &UpdateClientForbidden{}
 }
 
-/*UpdateClientForbidden handles this case with default header values.
+/*
+UpdateClientForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -165,8 +283,48 @@ type UpdateClientForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update client forbidden response has a 2xx status code
+func (o *UpdateClientForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update client forbidden response has a 3xx status code
+func (o *UpdateClientForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update client forbidden response has a 4xx status code
+func (o *UpdateClientForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update client forbidden response has a 5xx status code
+func (o *UpdateClientForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update client forbidden response a status code equal to that given
+func (o *UpdateClientForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update client forbidden response
+func (o *UpdateClientForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateClientForbidden) Error() string {
-	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientForbidden %s", 403, payload)
+}
+
+func (o *UpdateClientForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientForbidden %s", 403, payload)
+}
+
+func (o *UpdateClientForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateClientForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -186,7 +344,8 @@ func NewUpdateClientNotFound() *UpdateClientNotFound {
 	return &UpdateClientNotFound{}
 }
 
-/*UpdateClientNotFound handles this case with default header values.
+/*
+UpdateClientNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -194,8 +353,48 @@ type UpdateClientNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update client not found response has a 2xx status code
+func (o *UpdateClientNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update client not found response has a 3xx status code
+func (o *UpdateClientNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update client not found response has a 4xx status code
+func (o *UpdateClientNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update client not found response has a 5xx status code
+func (o *UpdateClientNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update client not found response a status code equal to that given
+func (o *UpdateClientNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update client not found response
+func (o *UpdateClientNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateClientNotFound) Error() string {
-	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientNotFound %s", 404, payload)
+}
+
+func (o *UpdateClientNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /client/{id}][%d] updateClientNotFound %s", 404, payload)
+}
+
+func (o *UpdateClientNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateClientNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

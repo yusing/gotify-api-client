@@ -13,65 +13,80 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
-// NewCreateAppParams creates a new CreateAppParams object
-// with the default values initialized.
+// NewCreateAppParams creates a new CreateAppParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateAppParams() *CreateAppParams {
-	var ()
 	return &CreateAppParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateAppParamsWithTimeout creates a new CreateAppParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateAppParamsWithTimeout(timeout time.Duration) *CreateAppParams {
-	var ()
 	return &CreateAppParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateAppParamsWithContext creates a new CreateAppParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateAppParamsWithContext(ctx context.Context) *CreateAppParams {
-	var ()
 	return &CreateAppParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateAppParamsWithHTTPClient creates a new CreateAppParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateAppParamsWithHTTPClient(client *http.Client) *CreateAppParams {
-	var ()
 	return &CreateAppParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateAppParams contains all the parameters to send to the API endpoint
-for the create app operation typically these are written to a http.Request
+/*
+CreateAppParams contains all the parameters to send to the API endpoint
+
+	for the create app operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateAppParams struct {
 
-	/*Body
-	  the application to add
+	/* Body.
 
+	   the application to add
 	*/
-	Body *models.Application
+	Body *models.ApplicationParams
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create app params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateAppParams) WithDefaults() *CreateAppParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create app params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateAppParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create app params
@@ -108,13 +123,13 @@ func (o *CreateAppParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the create app params
-func (o *CreateAppParams) WithBody(body *models.Application) *CreateAppParams {
+func (o *CreateAppParams) WithBody(body *models.ApplicationParams) *CreateAppParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the create app params
-func (o *CreateAppParams) SetBody(body *models.Application) {
+func (o *CreateAppParams) SetBody(body *models.ApplicationParams) {
 	o.Body = body
 }
 
@@ -125,7 +140,6 @@ func (o *CreateAppParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Reg
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

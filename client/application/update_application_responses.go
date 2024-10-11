@@ -6,14 +6,14 @@ package application
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // UpdateApplicationReader is a Reader for the UpdateApplication structure.
@@ -24,44 +24,38 @@ type UpdateApplicationReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateApplicationReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateApplicationOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateApplicationBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewUpdateApplicationUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewUpdateApplicationForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewUpdateApplicationNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[PUT /application/{id}] updateApplication", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewUpdateApplicationOK() *UpdateApplicationOK {
 	return &UpdateApplicationOK{}
 }
 
-/*UpdateApplicationOK handles this case with default header values.
+/*
+UpdateApplicationOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type UpdateApplicationOK struct {
 	Payload *models.Application
 }
 
+// IsSuccess returns true when this update application o k response has a 2xx status code
+func (o *UpdateApplicationOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update application o k response has a 3xx status code
+func (o *UpdateApplicationOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update application o k response has a 4xx status code
+func (o *UpdateApplicationOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update application o k response has a 5xx status code
+func (o *UpdateApplicationOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update application o k response a status code equal to that given
+func (o *UpdateApplicationOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the update application o k response
+func (o *UpdateApplicationOK) Code() int {
+	return 200
+}
+
 func (o *UpdateApplicationOK) Error() string {
-	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationOK %s", 200, payload)
+}
+
+func (o *UpdateApplicationOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationOK %s", 200, payload)
+}
+
+func (o *UpdateApplicationOK) GetPayload() *models.Application {
+	return o.Payload
 }
 
 func (o *UpdateApplicationOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -99,7 +134,8 @@ func NewUpdateApplicationBadRequest() *UpdateApplicationBadRequest {
 	return &UpdateApplicationBadRequest{}
 }
 
-/*UpdateApplicationBadRequest handles this case with default header values.
+/*
+UpdateApplicationBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -107,8 +143,48 @@ type UpdateApplicationBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update application bad request response has a 2xx status code
+func (o *UpdateApplicationBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update application bad request response has a 3xx status code
+func (o *UpdateApplicationBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update application bad request response has a 4xx status code
+func (o *UpdateApplicationBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update application bad request response has a 5xx status code
+func (o *UpdateApplicationBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update application bad request response a status code equal to that given
+func (o *UpdateApplicationBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update application bad request response
+func (o *UpdateApplicationBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateApplicationBadRequest) Error() string {
-	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationBadRequest %s", 400, payload)
+}
+
+func (o *UpdateApplicationBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationBadRequest %s", 400, payload)
+}
+
+func (o *UpdateApplicationBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateApplicationBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -128,7 +204,8 @@ func NewUpdateApplicationUnauthorized() *UpdateApplicationUnauthorized {
 	return &UpdateApplicationUnauthorized{}
 }
 
-/*UpdateApplicationUnauthorized handles this case with default header values.
+/*
+UpdateApplicationUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -136,8 +213,48 @@ type UpdateApplicationUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update application unauthorized response has a 2xx status code
+func (o *UpdateApplicationUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update application unauthorized response has a 3xx status code
+func (o *UpdateApplicationUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update application unauthorized response has a 4xx status code
+func (o *UpdateApplicationUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update application unauthorized response has a 5xx status code
+func (o *UpdateApplicationUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update application unauthorized response a status code equal to that given
+func (o *UpdateApplicationUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update application unauthorized response
+func (o *UpdateApplicationUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateApplicationUnauthorized) Error() string {
-	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateApplicationUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateApplicationUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateApplicationUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -157,7 +274,8 @@ func NewUpdateApplicationForbidden() *UpdateApplicationForbidden {
 	return &UpdateApplicationForbidden{}
 }
 
-/*UpdateApplicationForbidden handles this case with default header values.
+/*
+UpdateApplicationForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -165,8 +283,48 @@ type UpdateApplicationForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update application forbidden response has a 2xx status code
+func (o *UpdateApplicationForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update application forbidden response has a 3xx status code
+func (o *UpdateApplicationForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update application forbidden response has a 4xx status code
+func (o *UpdateApplicationForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update application forbidden response has a 5xx status code
+func (o *UpdateApplicationForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update application forbidden response a status code equal to that given
+func (o *UpdateApplicationForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update application forbidden response
+func (o *UpdateApplicationForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateApplicationForbidden) Error() string {
-	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationForbidden %s", 403, payload)
+}
+
+func (o *UpdateApplicationForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationForbidden %s", 403, payload)
+}
+
+func (o *UpdateApplicationForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateApplicationForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -186,7 +344,8 @@ func NewUpdateApplicationNotFound() *UpdateApplicationNotFound {
 	return &UpdateApplicationNotFound{}
 }
 
-/*UpdateApplicationNotFound handles this case with default header values.
+/*
+UpdateApplicationNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -194,8 +353,48 @@ type UpdateApplicationNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update application not found response has a 2xx status code
+func (o *UpdateApplicationNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update application not found response has a 3xx status code
+func (o *UpdateApplicationNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update application not found response has a 4xx status code
+func (o *UpdateApplicationNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update application not found response has a 5xx status code
+func (o *UpdateApplicationNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update application not found response a status code equal to that given
+func (o *UpdateApplicationNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the update application not found response
+func (o *UpdateApplicationNotFound) Code() int {
+	return 404
+}
+
 func (o *UpdateApplicationNotFound) Error() string {
-	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationNotFound %s", 404, payload)
+}
+
+func (o *UpdateApplicationNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[PUT /application/{id}][%d] updateApplicationNotFound %s", 404, payload)
+}
+
+func (o *UpdateApplicationNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateApplicationNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

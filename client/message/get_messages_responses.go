@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetMessagesReader is a Reader for the GetMessages structure.
@@ -24,37 +24,32 @@ type GetMessagesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetMessagesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetMessagesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGetMessagesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewGetMessagesUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetMessagesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /message] getMessages", response, response.Code())
 	}
 }
 
@@ -63,7 +58,8 @@ func NewGetMessagesOK() *GetMessagesOK {
 	return &GetMessagesOK{}
 }
 
-/*GetMessagesOK handles this case with default header values.
+/*
+GetMessagesOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -71,8 +67,48 @@ type GetMessagesOK struct {
 	Payload *models.PagedMessages
 }
 
+// IsSuccess returns true when this get messages o k response has a 2xx status code
+func (o *GetMessagesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get messages o k response has a 3xx status code
+func (o *GetMessagesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get messages o k response has a 4xx status code
+func (o *GetMessagesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get messages o k response has a 5xx status code
+func (o *GetMessagesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get messages o k response a status code equal to that given
+func (o *GetMessagesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get messages o k response
+func (o *GetMessagesOK) Code() int {
+	return 200
+}
+
 func (o *GetMessagesOK) Error() string {
-	return fmt.Sprintf("[GET /message][%d] getMessagesOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesOK %s", 200, payload)
+}
+
+func (o *GetMessagesOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesOK %s", 200, payload)
+}
+
+func (o *GetMessagesOK) GetPayload() *models.PagedMessages {
+	return o.Payload
 }
 
 func (o *GetMessagesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -92,7 +128,8 @@ func NewGetMessagesBadRequest() *GetMessagesBadRequest {
 	return &GetMessagesBadRequest{}
 }
 
-/*GetMessagesBadRequest handles this case with default header values.
+/*
+GetMessagesBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -100,8 +137,48 @@ type GetMessagesBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get messages bad request response has a 2xx status code
+func (o *GetMessagesBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get messages bad request response has a 3xx status code
+func (o *GetMessagesBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get messages bad request response has a 4xx status code
+func (o *GetMessagesBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get messages bad request response has a 5xx status code
+func (o *GetMessagesBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get messages bad request response a status code equal to that given
+func (o *GetMessagesBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get messages bad request response
+func (o *GetMessagesBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetMessagesBadRequest) Error() string {
-	return fmt.Sprintf("[GET /message][%d] getMessagesBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesBadRequest %s", 400, payload)
+}
+
+func (o *GetMessagesBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesBadRequest %s", 400, payload)
+}
+
+func (o *GetMessagesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetMessagesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -121,7 +198,8 @@ func NewGetMessagesUnauthorized() *GetMessagesUnauthorized {
 	return &GetMessagesUnauthorized{}
 }
 
-/*GetMessagesUnauthorized handles this case with default header values.
+/*
+GetMessagesUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -129,8 +207,48 @@ type GetMessagesUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get messages unauthorized response has a 2xx status code
+func (o *GetMessagesUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get messages unauthorized response has a 3xx status code
+func (o *GetMessagesUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get messages unauthorized response has a 4xx status code
+func (o *GetMessagesUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get messages unauthorized response has a 5xx status code
+func (o *GetMessagesUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get messages unauthorized response a status code equal to that given
+func (o *GetMessagesUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get messages unauthorized response
+func (o *GetMessagesUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetMessagesUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /message][%d] getMessagesUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *GetMessagesUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *GetMessagesUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetMessagesUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -150,7 +268,8 @@ func NewGetMessagesForbidden() *GetMessagesForbidden {
 	return &GetMessagesForbidden{}
 }
 
-/*GetMessagesForbidden handles this case with default header values.
+/*
+GetMessagesForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -158,8 +277,48 @@ type GetMessagesForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get messages forbidden response has a 2xx status code
+func (o *GetMessagesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get messages forbidden response has a 3xx status code
+func (o *GetMessagesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get messages forbidden response has a 4xx status code
+func (o *GetMessagesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get messages forbidden response has a 5xx status code
+func (o *GetMessagesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get messages forbidden response a status code equal to that given
+func (o *GetMessagesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get messages forbidden response
+func (o *GetMessagesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetMessagesForbidden) Error() string {
-	return fmt.Sprintf("[GET /message][%d] getMessagesForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesForbidden %s", 403, payload)
+}
+
+func (o *GetMessagesForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /message][%d] getMessagesForbidden %s", 403, payload)
+}
+
+func (o *GetMessagesForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetMessagesForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

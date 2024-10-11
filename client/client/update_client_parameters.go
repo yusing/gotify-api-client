@@ -13,71 +13,89 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
-// NewUpdateClientParams creates a new UpdateClientParams object
-// with the default values initialized.
+// NewUpdateClientParams creates a new UpdateClientParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewUpdateClientParams() *UpdateClientParams {
-	var ()
 	return &UpdateClientParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewUpdateClientParamsWithTimeout creates a new UpdateClientParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewUpdateClientParamsWithTimeout(timeout time.Duration) *UpdateClientParams {
-	var ()
 	return &UpdateClientParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewUpdateClientParamsWithContext creates a new UpdateClientParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewUpdateClientParamsWithContext(ctx context.Context) *UpdateClientParams {
-	var ()
 	return &UpdateClientParams{
-
 		Context: ctx,
 	}
 }
 
 // NewUpdateClientParamsWithHTTPClient creates a new UpdateClientParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewUpdateClientParamsWithHTTPClient(client *http.Client) *UpdateClientParams {
-	var ()
 	return &UpdateClientParams{
 		HTTPClient: client,
 	}
 }
 
-/*UpdateClientParams contains all the parameters to send to the API endpoint
-for the update client operation typically these are written to a http.Request
+/*
+UpdateClientParams contains all the parameters to send to the API endpoint
+
+	for the update client operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateClientParams struct {
 
-	/*Body
-	  the client to update
+	/* Body.
 
+	   the client to update
 	*/
-	Body *models.Client
-	/*ID
-	  the client id
+	Body *models.ClientParams
 
+	/* ID.
+
+	   the client id
+
+	   Format: int64
 	*/
 	ID int64
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the update client params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateClientParams) WithDefaults() *UpdateClientParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the update client params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *UpdateClientParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the update client params
@@ -114,13 +132,13 @@ func (o *UpdateClientParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the update client params
-func (o *UpdateClientParams) WithBody(body *models.Client) *UpdateClientParams {
+func (o *UpdateClientParams) WithBody(body *models.ClientParams) *UpdateClientParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the update client params
-func (o *UpdateClientParams) SetBody(body *models.Client) {
+func (o *UpdateClientParams) SetBody(body *models.ClientParams) {
 	o.Body = body
 }
 
@@ -142,7 +160,6 @@ func (o *UpdateClientParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

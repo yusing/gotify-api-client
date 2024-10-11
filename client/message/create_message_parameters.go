@@ -13,65 +13,80 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
-// NewCreateMessageParams creates a new CreateMessageParams object
-// with the default values initialized.
+// NewCreateMessageParams creates a new CreateMessageParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCreateMessageParams() *CreateMessageParams {
-	var ()
 	return &CreateMessageParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCreateMessageParamsWithTimeout creates a new CreateMessageParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCreateMessageParamsWithTimeout(timeout time.Duration) *CreateMessageParams {
-	var ()
 	return &CreateMessageParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCreateMessageParamsWithContext creates a new CreateMessageParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCreateMessageParamsWithContext(ctx context.Context) *CreateMessageParams {
-	var ()
 	return &CreateMessageParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCreateMessageParamsWithHTTPClient creates a new CreateMessageParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCreateMessageParamsWithHTTPClient(client *http.Client) *CreateMessageParams {
-	var ()
 	return &CreateMessageParams{
 		HTTPClient: client,
 	}
 }
 
-/*CreateMessageParams contains all the parameters to send to the API endpoint
-for the create message operation typically these are written to a http.Request
+/*
+CreateMessageParams contains all the parameters to send to the API endpoint
+
+	for the create message operation.
+
+	Typically these are written to a http.Request.
 */
 type CreateMessageParams struct {
 
-	/*Body
-	  the message to add
+	/* Body.
 
+	   the message to add
 	*/
 	Body *models.MessageExternal
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the create message params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateMessageParams) WithDefaults() *CreateMessageParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the create message params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CreateMessageParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the create message params
@@ -125,7 +140,6 @@ func (o *CreateMessageParams) WriteToRequest(r runtime.ClientRequest, reg strfmt
 		return err
 	}
 	var res []error
-
 	if o.Body != nil {
 		if err := r.SetBodyParam(o.Body); err != nil {
 			return err

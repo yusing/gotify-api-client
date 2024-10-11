@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetAppMessagesReader is a Reader for the GetAppMessages structure.
@@ -24,44 +24,38 @@ type GetAppMessagesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetAppMessagesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetAppMessagesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGetAppMessagesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewGetAppMessagesUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetAppMessagesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGetAppMessagesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /application/{id}/message] getAppMessages", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewGetAppMessagesOK() *GetAppMessagesOK {
 	return &GetAppMessagesOK{}
 }
 
-/*GetAppMessagesOK handles this case with default header values.
+/*
+GetAppMessagesOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type GetAppMessagesOK struct {
 	Payload *models.PagedMessages
 }
 
+// IsSuccess returns true when this get app messages o k response has a 2xx status code
+func (o *GetAppMessagesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get app messages o k response has a 3xx status code
+func (o *GetAppMessagesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get app messages o k response has a 4xx status code
+func (o *GetAppMessagesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get app messages o k response has a 5xx status code
+func (o *GetAppMessagesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get app messages o k response a status code equal to that given
+func (o *GetAppMessagesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get app messages o k response
+func (o *GetAppMessagesOK) Code() int {
+	return 200
+}
+
 func (o *GetAppMessagesOK) Error() string {
-	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesOK %s", 200, payload)
+}
+
+func (o *GetAppMessagesOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesOK %s", 200, payload)
+}
+
+func (o *GetAppMessagesOK) GetPayload() *models.PagedMessages {
+	return o.Payload
 }
 
 func (o *GetAppMessagesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -99,7 +134,8 @@ func NewGetAppMessagesBadRequest() *GetAppMessagesBadRequest {
 	return &GetAppMessagesBadRequest{}
 }
 
-/*GetAppMessagesBadRequest handles this case with default header values.
+/*
+GetAppMessagesBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -107,8 +143,48 @@ type GetAppMessagesBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get app messages bad request response has a 2xx status code
+func (o *GetAppMessagesBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get app messages bad request response has a 3xx status code
+func (o *GetAppMessagesBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get app messages bad request response has a 4xx status code
+func (o *GetAppMessagesBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get app messages bad request response has a 5xx status code
+func (o *GetAppMessagesBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get app messages bad request response a status code equal to that given
+func (o *GetAppMessagesBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get app messages bad request response
+func (o *GetAppMessagesBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetAppMessagesBadRequest) Error() string {
-	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesBadRequest %s", 400, payload)
+}
+
+func (o *GetAppMessagesBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesBadRequest %s", 400, payload)
+}
+
+func (o *GetAppMessagesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppMessagesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -128,7 +204,8 @@ func NewGetAppMessagesUnauthorized() *GetAppMessagesUnauthorized {
 	return &GetAppMessagesUnauthorized{}
 }
 
-/*GetAppMessagesUnauthorized handles this case with default header values.
+/*
+GetAppMessagesUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -136,8 +213,48 @@ type GetAppMessagesUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get app messages unauthorized response has a 2xx status code
+func (o *GetAppMessagesUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get app messages unauthorized response has a 3xx status code
+func (o *GetAppMessagesUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get app messages unauthorized response has a 4xx status code
+func (o *GetAppMessagesUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get app messages unauthorized response has a 5xx status code
+func (o *GetAppMessagesUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get app messages unauthorized response a status code equal to that given
+func (o *GetAppMessagesUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get app messages unauthorized response
+func (o *GetAppMessagesUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetAppMessagesUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *GetAppMessagesUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *GetAppMessagesUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppMessagesUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -157,7 +274,8 @@ func NewGetAppMessagesForbidden() *GetAppMessagesForbidden {
 	return &GetAppMessagesForbidden{}
 }
 
-/*GetAppMessagesForbidden handles this case with default header values.
+/*
+GetAppMessagesForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -165,8 +283,48 @@ type GetAppMessagesForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get app messages forbidden response has a 2xx status code
+func (o *GetAppMessagesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get app messages forbidden response has a 3xx status code
+func (o *GetAppMessagesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get app messages forbidden response has a 4xx status code
+func (o *GetAppMessagesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get app messages forbidden response has a 5xx status code
+func (o *GetAppMessagesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get app messages forbidden response a status code equal to that given
+func (o *GetAppMessagesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get app messages forbidden response
+func (o *GetAppMessagesForbidden) Code() int {
+	return 403
+}
+
 func (o *GetAppMessagesForbidden) Error() string {
-	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesForbidden %s", 403, payload)
+}
+
+func (o *GetAppMessagesForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesForbidden %s", 403, payload)
+}
+
+func (o *GetAppMessagesForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppMessagesForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -186,7 +344,8 @@ func NewGetAppMessagesNotFound() *GetAppMessagesNotFound {
 	return &GetAppMessagesNotFound{}
 }
 
-/*GetAppMessagesNotFound handles this case with default header values.
+/*
+GetAppMessagesNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -194,8 +353,48 @@ type GetAppMessagesNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get app messages not found response has a 2xx status code
+func (o *GetAppMessagesNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get app messages not found response has a 3xx status code
+func (o *GetAppMessagesNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get app messages not found response has a 4xx status code
+func (o *GetAppMessagesNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get app messages not found response has a 5xx status code
+func (o *GetAppMessagesNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get app messages not found response a status code equal to that given
+func (o *GetAppMessagesNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get app messages not found response
+func (o *GetAppMessagesNotFound) Code() int {
+	return 404
+}
+
 func (o *GetAppMessagesNotFound) Error() string {
-	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesNotFound %s", 404, payload)
+}
+
+func (o *GetAppMessagesNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application/{id}/message][%d] getAppMessagesNotFound %s", 404, payload)
+}
+
+func (o *GetAppMessagesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppMessagesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

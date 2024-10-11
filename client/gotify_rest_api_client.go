@@ -8,18 +8,18 @@ package client
 import (
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	"github.com/gotify/go-api-client/v2/client/application"
-	"github.com/gotify/go-api-client/v2/client/client"
-	"github.com/gotify/go-api-client/v2/client/message"
-	"github.com/gotify/go-api-client/v2/client/plugin"
-	"github.com/gotify/go-api-client/v2/client/user"
-	"github.com/gotify/go-api-client/v2/client/version"
+	"github.com/yusing/gotify-api-client/v2/client/application"
+	clientops "github.com/yusing/gotify-api-client/v2/client/client"
+	"github.com/yusing/gotify-api-client/v2/client/health"
+	"github.com/yusing/gotify-api-client/v2/client/message"
+	"github.com/yusing/gotify-api-client/v2/client/plugin"
+	"github.com/yusing/gotify-api-client/v2/client/user"
+	"github.com/yusing/gotify-api-client/v2/client/version"
 )
 
-// Default gotify REST HTTP client.
+// Default gotify REST API HTTP client.
 var Default = NewHTTPClient(nil)
 
 const (
@@ -34,14 +34,14 @@ const (
 // DefaultSchemes are the default schemes found in Meta (info) section of spec file
 var DefaultSchemes = []string{"http", "https"}
 
-// NewHTTPClient creates a new gotify REST HTTP client.
-func NewHTTPClient(formats strfmt.Registry) *GotifyREST {
+// NewHTTPClient creates a new gotify REST API HTTP client.
+func NewHTTPClient(formats strfmt.Registry) *GotifyRESTAPI {
 	return NewHTTPClientWithConfig(formats, nil)
 }
 
-// NewHTTPClientWithConfig creates a new gotify REST HTTP client,
+// NewHTTPClientWithConfig creates a new gotify REST API HTTP client,
 // using a customizable transport config.
-func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *GotifyREST {
+func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *GotifyRESTAPI {
 	// ensure nullable parameters have default
 	if cfg == nil {
 		cfg = DefaultTransportConfig()
@@ -52,28 +52,22 @@ func NewHTTPClientWithConfig(formats strfmt.Registry, cfg *TransportConfig) *Got
 	return New(transport, formats)
 }
 
-// New creates a new gotify REST client
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *GotifyREST {
+// New creates a new gotify REST API client
+func New(transport runtime.ClientTransport, formats strfmt.Registry) *GotifyRESTAPI {
 	// ensure nullable parameters have default
 	if formats == nil {
 		formats = strfmt.Default
 	}
 
-	cli := new(GotifyREST)
+	cli := new(GotifyRESTAPI)
 	cli.Transport = transport
-
 	cli.Application = application.New(transport, formats)
-
-	cli.Client = client.New(transport, formats)
-
+	cli.Client = clientops.New(transport, formats)
+	cli.Health = health.New(transport, formats)
 	cli.Message = message.New(transport, formats)
-
 	cli.Plugin = plugin.New(transport, formats)
-
 	cli.User = user.New(transport, formats)
-
 	cli.Version = version.New(transport, formats)
-
 	return cli
 }
 
@@ -116,37 +110,33 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 	return cfg
 }
 
-// GotifyREST is a client for gotify REST
-type GotifyREST struct {
-	Application *application.Client
+// GotifyRESTAPI is a client for gotify REST API
+type GotifyRESTAPI struct {
+	Application application.ClientService
 
-	Client *client.Client
+	Client clientops.ClientService
 
-	Message *message.Client
+	Health health.ClientService
 
-	Plugin *plugin.Client
+	Message message.ClientService
 
-	User *user.Client
+	Plugin plugin.ClientService
 
-	Version *version.Client
+	User user.ClientService
+
+	Version version.ClientService
 
 	Transport runtime.ClientTransport
 }
 
 // SetTransport changes the transport on the client and all its subresources
-func (c *GotifyREST) SetTransport(transport runtime.ClientTransport) {
+func (c *GotifyRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
-
 	c.Application.SetTransport(transport)
-
 	c.Client.SetTransport(transport)
-
+	c.Health.SetTransport(transport)
 	c.Message.SetTransport(transport)
-
 	c.Plugin.SetTransport(transport)
-
 	c.User.SetTransport(transport)
-
 	c.Version.SetTransport(transport)
-
 }

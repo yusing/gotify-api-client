@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // DeleteMessageReader is a Reader for the DeleteMessage structure.
@@ -24,44 +24,38 @@ type DeleteMessageReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteMessageReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewDeleteMessageOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteMessageBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewDeleteMessageUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewDeleteMessageForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteMessageNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /message/{id}] deleteMessage", response, response.Code())
 	}
 }
 
@@ -70,15 +64,50 @@ func NewDeleteMessageOK() *DeleteMessageOK {
 	return &DeleteMessageOK{}
 }
 
-/*DeleteMessageOK handles this case with default header values.
+/*
+DeleteMessageOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type DeleteMessageOK struct {
 }
 
+// IsSuccess returns true when this delete message o k response has a 2xx status code
+func (o *DeleteMessageOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete message o k response has a 3xx status code
+func (o *DeleteMessageOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete message o k response has a 4xx status code
+func (o *DeleteMessageOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete message o k response has a 5xx status code
+func (o *DeleteMessageOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete message o k response a status code equal to that given
+func (o *DeleteMessageOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the delete message o k response
+func (o *DeleteMessageOK) Code() int {
+	return 200
+}
+
 func (o *DeleteMessageOK) Error() string {
-	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageOK ", 200)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageOK", 200)
+}
+
+func (o *DeleteMessageOK) String() string {
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageOK", 200)
 }
 
 func (o *DeleteMessageOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -91,7 +120,8 @@ func NewDeleteMessageBadRequest() *DeleteMessageBadRequest {
 	return &DeleteMessageBadRequest{}
 }
 
-/*DeleteMessageBadRequest handles this case with default header values.
+/*
+DeleteMessageBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -99,8 +129,48 @@ type DeleteMessageBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete message bad request response has a 2xx status code
+func (o *DeleteMessageBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete message bad request response has a 3xx status code
+func (o *DeleteMessageBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete message bad request response has a 4xx status code
+func (o *DeleteMessageBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete message bad request response has a 5xx status code
+func (o *DeleteMessageBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete message bad request response a status code equal to that given
+func (o *DeleteMessageBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the delete message bad request response
+func (o *DeleteMessageBadRequest) Code() int {
+	return 400
+}
+
 func (o *DeleteMessageBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageBadRequest %s", 400, payload)
+}
+
+func (o *DeleteMessageBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageBadRequest %s", 400, payload)
+}
+
+func (o *DeleteMessageBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteMessageBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -120,7 +190,8 @@ func NewDeleteMessageUnauthorized() *DeleteMessageUnauthorized {
 	return &DeleteMessageUnauthorized{}
 }
 
-/*DeleteMessageUnauthorized handles this case with default header values.
+/*
+DeleteMessageUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -128,8 +199,48 @@ type DeleteMessageUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete message unauthorized response has a 2xx status code
+func (o *DeleteMessageUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete message unauthorized response has a 3xx status code
+func (o *DeleteMessageUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete message unauthorized response has a 4xx status code
+func (o *DeleteMessageUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete message unauthorized response has a 5xx status code
+func (o *DeleteMessageUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete message unauthorized response a status code equal to that given
+func (o *DeleteMessageUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the delete message unauthorized response
+func (o *DeleteMessageUnauthorized) Code() int {
+	return 401
+}
+
 func (o *DeleteMessageUnauthorized) Error() string {
-	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageUnauthorized %s", 401, payload)
+}
+
+func (o *DeleteMessageUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageUnauthorized %s", 401, payload)
+}
+
+func (o *DeleteMessageUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteMessageUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -149,7 +260,8 @@ func NewDeleteMessageForbidden() *DeleteMessageForbidden {
 	return &DeleteMessageForbidden{}
 }
 
-/*DeleteMessageForbidden handles this case with default header values.
+/*
+DeleteMessageForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -157,8 +269,48 @@ type DeleteMessageForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete message forbidden response has a 2xx status code
+func (o *DeleteMessageForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete message forbidden response has a 3xx status code
+func (o *DeleteMessageForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete message forbidden response has a 4xx status code
+func (o *DeleteMessageForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete message forbidden response has a 5xx status code
+func (o *DeleteMessageForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete message forbidden response a status code equal to that given
+func (o *DeleteMessageForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete message forbidden response
+func (o *DeleteMessageForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteMessageForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageForbidden %s", 403, payload)
+}
+
+func (o *DeleteMessageForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageForbidden %s", 403, payload)
+}
+
+func (o *DeleteMessageForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteMessageForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -178,7 +330,8 @@ func NewDeleteMessageNotFound() *DeleteMessageNotFound {
 	return &DeleteMessageNotFound{}
 }
 
-/*DeleteMessageNotFound handles this case with default header values.
+/*
+DeleteMessageNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -186,8 +339,48 @@ type DeleteMessageNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete message not found response has a 2xx status code
+func (o *DeleteMessageNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete message not found response has a 3xx status code
+func (o *DeleteMessageNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete message not found response has a 4xx status code
+func (o *DeleteMessageNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete message not found response has a 5xx status code
+func (o *DeleteMessageNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete message not found response a status code equal to that given
+func (o *DeleteMessageNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete message not found response
+func (o *DeleteMessageNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteMessageNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageNotFound %s", 404, payload)
+}
+
+func (o *DeleteMessageNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /message/{id}][%d] deleteMessageNotFound %s", 404, payload)
+}
+
+func (o *DeleteMessageNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteMessageNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

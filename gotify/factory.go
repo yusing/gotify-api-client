@@ -1,10 +1,11 @@
 package gotify
 
 import (
-	"net/url"
 	"net/http"
-	api "github.com/gotify/go-api-client/v2/client"
+	"net/url"
+
 	httptransport "github.com/go-openapi/runtime/client"
+	api "github.com/yusing/gotify-api-client/v2/client"
 )
 
 func NewClient(url *url.URL, client *http.Client) *api.GotifyREST {

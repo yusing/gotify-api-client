@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // StreamMessagesReader is a Reader for the StreamMessages structure.
@@ -24,44 +24,38 @@ type StreamMessagesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *StreamMessagesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewStreamMessagesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewStreamMessagesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewStreamMessagesUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewStreamMessagesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewStreamMessagesInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /stream] streamMessages", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewStreamMessagesOK() *StreamMessagesOK {
 	return &StreamMessagesOK{}
 }
 
-/*StreamMessagesOK handles this case with default header values.
+/*
+StreamMessagesOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type StreamMessagesOK struct {
 	Payload *models.MessageExternal
 }
 
+// IsSuccess returns true when this stream messages o k response has a 2xx status code
+func (o *StreamMessagesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this stream messages o k response has a 3xx status code
+func (o *StreamMessagesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stream messages o k response has a 4xx status code
+func (o *StreamMessagesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this stream messages o k response has a 5xx status code
+func (o *StreamMessagesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stream messages o k response a status code equal to that given
+func (o *StreamMessagesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the stream messages o k response
+func (o *StreamMessagesOK) Code() int {
+	return 200
+}
+
 func (o *StreamMessagesOK) Error() string {
-	return fmt.Sprintf("[GET /stream][%d] streamMessagesOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesOK %s", 200, payload)
+}
+
+func (o *StreamMessagesOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesOK %s", 200, payload)
+}
+
+func (o *StreamMessagesOK) GetPayload() *models.MessageExternal {
+	return o.Payload
 }
 
 func (o *StreamMessagesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -99,7 +134,8 @@ func NewStreamMessagesBadRequest() *StreamMessagesBadRequest {
 	return &StreamMessagesBadRequest{}
 }
 
-/*StreamMessagesBadRequest handles this case with default header values.
+/*
+StreamMessagesBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -107,8 +143,48 @@ type StreamMessagesBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this stream messages bad request response has a 2xx status code
+func (o *StreamMessagesBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stream messages bad request response has a 3xx status code
+func (o *StreamMessagesBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stream messages bad request response has a 4xx status code
+func (o *StreamMessagesBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this stream messages bad request response has a 5xx status code
+func (o *StreamMessagesBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stream messages bad request response a status code equal to that given
+func (o *StreamMessagesBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the stream messages bad request response
+func (o *StreamMessagesBadRequest) Code() int {
+	return 400
+}
+
 func (o *StreamMessagesBadRequest) Error() string {
-	return fmt.Sprintf("[GET /stream][%d] streamMessagesBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesBadRequest %s", 400, payload)
+}
+
+func (o *StreamMessagesBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesBadRequest %s", 400, payload)
+}
+
+func (o *StreamMessagesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *StreamMessagesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -128,7 +204,8 @@ func NewStreamMessagesUnauthorized() *StreamMessagesUnauthorized {
 	return &StreamMessagesUnauthorized{}
 }
 
-/*StreamMessagesUnauthorized handles this case with default header values.
+/*
+StreamMessagesUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -136,8 +213,48 @@ type StreamMessagesUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this stream messages unauthorized response has a 2xx status code
+func (o *StreamMessagesUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stream messages unauthorized response has a 3xx status code
+func (o *StreamMessagesUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stream messages unauthorized response has a 4xx status code
+func (o *StreamMessagesUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this stream messages unauthorized response has a 5xx status code
+func (o *StreamMessagesUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stream messages unauthorized response a status code equal to that given
+func (o *StreamMessagesUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the stream messages unauthorized response
+func (o *StreamMessagesUnauthorized) Code() int {
+	return 401
+}
+
 func (o *StreamMessagesUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /stream][%d] streamMessagesUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *StreamMessagesUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *StreamMessagesUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *StreamMessagesUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -157,7 +274,8 @@ func NewStreamMessagesForbidden() *StreamMessagesForbidden {
 	return &StreamMessagesForbidden{}
 }
 
-/*StreamMessagesForbidden handles this case with default header values.
+/*
+StreamMessagesForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -165,8 +283,48 @@ type StreamMessagesForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this stream messages forbidden response has a 2xx status code
+func (o *StreamMessagesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stream messages forbidden response has a 3xx status code
+func (o *StreamMessagesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stream messages forbidden response has a 4xx status code
+func (o *StreamMessagesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this stream messages forbidden response has a 5xx status code
+func (o *StreamMessagesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this stream messages forbidden response a status code equal to that given
+func (o *StreamMessagesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the stream messages forbidden response
+func (o *StreamMessagesForbidden) Code() int {
+	return 403
+}
+
 func (o *StreamMessagesForbidden) Error() string {
-	return fmt.Sprintf("[GET /stream][%d] streamMessagesForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesForbidden %s", 403, payload)
+}
+
+func (o *StreamMessagesForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesForbidden %s", 403, payload)
+}
+
+func (o *StreamMessagesForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *StreamMessagesForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -186,7 +344,8 @@ func NewStreamMessagesInternalServerError() *StreamMessagesInternalServerError {
 	return &StreamMessagesInternalServerError{}
 }
 
-/*StreamMessagesInternalServerError handles this case with default header values.
+/*
+StreamMessagesInternalServerError describes a response with status code 500, with default header values.
 
 Server Error
 */
@@ -194,8 +353,48 @@ type StreamMessagesInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this stream messages internal server error response has a 2xx status code
+func (o *StreamMessagesInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this stream messages internal server error response has a 3xx status code
+func (o *StreamMessagesInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this stream messages internal server error response has a 4xx status code
+func (o *StreamMessagesInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this stream messages internal server error response has a 5xx status code
+func (o *StreamMessagesInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this stream messages internal server error response a status code equal to that given
+func (o *StreamMessagesInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the stream messages internal server error response
+func (o *StreamMessagesInternalServerError) Code() int {
+	return 500
+}
+
 func (o *StreamMessagesInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /stream][%d] streamMessagesInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesInternalServerError %s", 500, payload)
+}
+
+func (o *StreamMessagesInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /stream][%d] streamMessagesInternalServerError %s", 500, payload)
+}
+
+func (o *StreamMessagesInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *StreamMessagesInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

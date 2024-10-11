@@ -6,14 +6,14 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // CurrentUserReader is a Reader for the CurrentUser structure.
@@ -24,30 +24,26 @@ type CurrentUserReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CurrentUserReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCurrentUserOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewCurrentUserUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewCurrentUserForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /current/user] currentUser", response, response.Code())
 	}
 }
 
@@ -56,7 +52,8 @@ func NewCurrentUserOK() *CurrentUserOK {
 	return &CurrentUserOK{}
 }
 
-/*CurrentUserOK handles this case with default header values.
+/*
+CurrentUserOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -64,8 +61,48 @@ type CurrentUserOK struct {
 	Payload *models.UserExternal
 }
 
+// IsSuccess returns true when this current user o k response has a 2xx status code
+func (o *CurrentUserOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this current user o k response has a 3xx status code
+func (o *CurrentUserOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this current user o k response has a 4xx status code
+func (o *CurrentUserOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this current user o k response has a 5xx status code
+func (o *CurrentUserOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this current user o k response a status code equal to that given
+func (o *CurrentUserOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the current user o k response
+func (o *CurrentUserOK) Code() int {
+	return 200
+}
+
 func (o *CurrentUserOK) Error() string {
-	return fmt.Sprintf("[GET /current/user][%d] currentUserOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserOK %s", 200, payload)
+}
+
+func (o *CurrentUserOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserOK %s", 200, payload)
+}
+
+func (o *CurrentUserOK) GetPayload() *models.UserExternal {
+	return o.Payload
 }
 
 func (o *CurrentUserOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -85,7 +122,8 @@ func NewCurrentUserUnauthorized() *CurrentUserUnauthorized {
 	return &CurrentUserUnauthorized{}
 }
 
-/*CurrentUserUnauthorized handles this case with default header values.
+/*
+CurrentUserUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -93,8 +131,48 @@ type CurrentUserUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this current user unauthorized response has a 2xx status code
+func (o *CurrentUserUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this current user unauthorized response has a 3xx status code
+func (o *CurrentUserUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this current user unauthorized response has a 4xx status code
+func (o *CurrentUserUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this current user unauthorized response has a 5xx status code
+func (o *CurrentUserUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this current user unauthorized response a status code equal to that given
+func (o *CurrentUserUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the current user unauthorized response
+func (o *CurrentUserUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CurrentUserUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /current/user][%d] currentUserUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserUnauthorized %s", 401, payload)
+}
+
+func (o *CurrentUserUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserUnauthorized %s", 401, payload)
+}
+
+func (o *CurrentUserUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CurrentUserUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -114,7 +192,8 @@ func NewCurrentUserForbidden() *CurrentUserForbidden {
 	return &CurrentUserForbidden{}
 }
 
-/*CurrentUserForbidden handles this case with default header values.
+/*
+CurrentUserForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -122,8 +201,48 @@ type CurrentUserForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this current user forbidden response has a 2xx status code
+func (o *CurrentUserForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this current user forbidden response has a 3xx status code
+func (o *CurrentUserForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this current user forbidden response has a 4xx status code
+func (o *CurrentUserForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this current user forbidden response has a 5xx status code
+func (o *CurrentUserForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this current user forbidden response a status code equal to that given
+func (o *CurrentUserForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the current user forbidden response
+func (o *CurrentUserForbidden) Code() int {
+	return 403
+}
+
 func (o *CurrentUserForbidden) Error() string {
-	return fmt.Sprintf("[GET /current/user][%d] currentUserForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserForbidden %s", 403, payload)
+}
+
+func (o *CurrentUserForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /current/user][%d] currentUserForbidden %s", 403, payload)
+}
+
+func (o *CurrentUserForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CurrentUserForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

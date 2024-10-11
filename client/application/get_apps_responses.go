@@ -6,14 +6,14 @@ package application
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetAppsReader is a Reader for the GetApps structure.
@@ -24,30 +24,26 @@ type GetAppsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetAppsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetAppsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewGetAppsUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetAppsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /application] getApps", response, response.Code())
 	}
 }
 
@@ -56,7 +52,8 @@ func NewGetAppsOK() *GetAppsOK {
 	return &GetAppsOK{}
 }
 
-/*GetAppsOK handles this case with default header values.
+/*
+GetAppsOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -64,8 +61,48 @@ type GetAppsOK struct {
 	Payload []*models.Application
 }
 
+// IsSuccess returns true when this get apps o k response has a 2xx status code
+func (o *GetAppsOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get apps o k response has a 3xx status code
+func (o *GetAppsOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get apps o k response has a 4xx status code
+func (o *GetAppsOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get apps o k response has a 5xx status code
+func (o *GetAppsOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get apps o k response a status code equal to that given
+func (o *GetAppsOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get apps o k response
+func (o *GetAppsOK) Code() int {
+	return 200
+}
+
 func (o *GetAppsOK) Error() string {
-	return fmt.Sprintf("[GET /application][%d] getAppsOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsOK %s", 200, payload)
+}
+
+func (o *GetAppsOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsOK %s", 200, payload)
+}
+
+func (o *GetAppsOK) GetPayload() []*models.Application {
+	return o.Payload
 }
 
 func (o *GetAppsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -83,7 +120,8 @@ func NewGetAppsUnauthorized() *GetAppsUnauthorized {
 	return &GetAppsUnauthorized{}
 }
 
-/*GetAppsUnauthorized handles this case with default header values.
+/*
+GetAppsUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -91,8 +129,48 @@ type GetAppsUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get apps unauthorized response has a 2xx status code
+func (o *GetAppsUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get apps unauthorized response has a 3xx status code
+func (o *GetAppsUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get apps unauthorized response has a 4xx status code
+func (o *GetAppsUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get apps unauthorized response has a 5xx status code
+func (o *GetAppsUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get apps unauthorized response a status code equal to that given
+func (o *GetAppsUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get apps unauthorized response
+func (o *GetAppsUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetAppsUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /application][%d] getAppsUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsUnauthorized %s", 401, payload)
+}
+
+func (o *GetAppsUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsUnauthorized %s", 401, payload)
+}
+
+func (o *GetAppsUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppsUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -112,7 +190,8 @@ func NewGetAppsForbidden() *GetAppsForbidden {
 	return &GetAppsForbidden{}
 }
 
-/*GetAppsForbidden handles this case with default header values.
+/*
+GetAppsForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -120,8 +199,48 @@ type GetAppsForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get apps forbidden response has a 2xx status code
+func (o *GetAppsForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get apps forbidden response has a 3xx status code
+func (o *GetAppsForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get apps forbidden response has a 4xx status code
+func (o *GetAppsForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get apps forbidden response has a 5xx status code
+func (o *GetAppsForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get apps forbidden response a status code equal to that given
+func (o *GetAppsForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get apps forbidden response
+func (o *GetAppsForbidden) Code() int {
+	return 403
+}
+
 func (o *GetAppsForbidden) Error() string {
-	return fmt.Sprintf("[GET /application][%d] getAppsForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsForbidden %s", 403, payload)
+}
+
+func (o *GetAppsForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /application][%d] getAppsForbidden %s", 403, payload)
+}
+
+func (o *GetAppsForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetAppsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

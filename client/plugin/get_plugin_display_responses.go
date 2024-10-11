@@ -6,14 +6,14 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetPluginDisplayReader is a Reader for the GetPluginDisplay structure.
@@ -24,44 +24,38 @@ type GetPluginDisplayReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetPluginDisplayReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetPluginDisplayOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewGetPluginDisplayUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetPluginDisplayForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGetPluginDisplayNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewGetPluginDisplayInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /plugin/{id}/display] getPluginDisplay", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewGetPluginDisplayOK() *GetPluginDisplayOK {
 	return &GetPluginDisplayOK{}
 }
 
-/*GetPluginDisplayOK handles this case with default header values.
+/*
+GetPluginDisplayOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type GetPluginDisplayOK struct {
 	Payload string
 }
 
+// IsSuccess returns true when this get plugin display o k response has a 2xx status code
+func (o *GetPluginDisplayOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get plugin display o k response has a 3xx status code
+func (o *GetPluginDisplayOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin display o k response has a 4xx status code
+func (o *GetPluginDisplayOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugin display o k response has a 5xx status code
+func (o *GetPluginDisplayOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin display o k response a status code equal to that given
+func (o *GetPluginDisplayOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get plugin display o k response
+func (o *GetPluginDisplayOK) Code() int {
+	return 200
+}
+
 func (o *GetPluginDisplayOK) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayOK %s", 200, payload)
+}
+
+func (o *GetPluginDisplayOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayOK %s", 200, payload)
+}
+
+func (o *GetPluginDisplayOK) GetPayload() string {
+	return o.Payload
 }
 
 func (o *GetPluginDisplayOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,7 +132,8 @@ func NewGetPluginDisplayUnauthorized() *GetPluginDisplayUnauthorized {
 	return &GetPluginDisplayUnauthorized{}
 }
 
-/*GetPluginDisplayUnauthorized handles this case with default header values.
+/*
+GetPluginDisplayUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -105,8 +141,48 @@ type GetPluginDisplayUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin display unauthorized response has a 2xx status code
+func (o *GetPluginDisplayUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin display unauthorized response has a 3xx status code
+func (o *GetPluginDisplayUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin display unauthorized response has a 4xx status code
+func (o *GetPluginDisplayUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin display unauthorized response has a 5xx status code
+func (o *GetPluginDisplayUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin display unauthorized response a status code equal to that given
+func (o *GetPluginDisplayUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get plugin display unauthorized response
+func (o *GetPluginDisplayUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetPluginDisplayUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginDisplayUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginDisplayUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginDisplayUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -126,7 +202,8 @@ func NewGetPluginDisplayForbidden() *GetPluginDisplayForbidden {
 	return &GetPluginDisplayForbidden{}
 }
 
-/*GetPluginDisplayForbidden handles this case with default header values.
+/*
+GetPluginDisplayForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -134,8 +211,48 @@ type GetPluginDisplayForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin display forbidden response has a 2xx status code
+func (o *GetPluginDisplayForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin display forbidden response has a 3xx status code
+func (o *GetPluginDisplayForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin display forbidden response has a 4xx status code
+func (o *GetPluginDisplayForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin display forbidden response has a 5xx status code
+func (o *GetPluginDisplayForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin display forbidden response a status code equal to that given
+func (o *GetPluginDisplayForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get plugin display forbidden response
+func (o *GetPluginDisplayForbidden) Code() int {
+	return 403
+}
+
 func (o *GetPluginDisplayForbidden) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayForbidden %s", 403, payload)
+}
+
+func (o *GetPluginDisplayForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayForbidden %s", 403, payload)
+}
+
+func (o *GetPluginDisplayForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginDisplayForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -155,7 +272,8 @@ func NewGetPluginDisplayNotFound() *GetPluginDisplayNotFound {
 	return &GetPluginDisplayNotFound{}
 }
 
-/*GetPluginDisplayNotFound handles this case with default header values.
+/*
+GetPluginDisplayNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -163,8 +281,48 @@ type GetPluginDisplayNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin display not found response has a 2xx status code
+func (o *GetPluginDisplayNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin display not found response has a 3xx status code
+func (o *GetPluginDisplayNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin display not found response has a 4xx status code
+func (o *GetPluginDisplayNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin display not found response has a 5xx status code
+func (o *GetPluginDisplayNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin display not found response a status code equal to that given
+func (o *GetPluginDisplayNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get plugin display not found response
+func (o *GetPluginDisplayNotFound) Code() int {
+	return 404
+}
+
 func (o *GetPluginDisplayNotFound) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayNotFound %s", 404, payload)
+}
+
+func (o *GetPluginDisplayNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayNotFound %s", 404, payload)
+}
+
+func (o *GetPluginDisplayNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginDisplayNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -184,7 +342,8 @@ func NewGetPluginDisplayInternalServerError() *GetPluginDisplayInternalServerErr
 	return &GetPluginDisplayInternalServerError{}
 }
 
-/*GetPluginDisplayInternalServerError handles this case with default header values.
+/*
+GetPluginDisplayInternalServerError describes a response with status code 500, with default header values.
 
 Internal Server Error
 */
@@ -192,8 +351,48 @@ type GetPluginDisplayInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin display internal server error response has a 2xx status code
+func (o *GetPluginDisplayInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin display internal server error response has a 3xx status code
+func (o *GetPluginDisplayInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin display internal server error response has a 4xx status code
+func (o *GetPluginDisplayInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugin display internal server error response has a 5xx status code
+func (o *GetPluginDisplayInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this get plugin display internal server error response a status code equal to that given
+func (o *GetPluginDisplayInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the get plugin display internal server error response
+func (o *GetPluginDisplayInternalServerError) Code() int {
+	return 500
+}
+
 func (o *GetPluginDisplayInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginDisplayInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/display][%d] getPluginDisplayInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginDisplayInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginDisplayInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

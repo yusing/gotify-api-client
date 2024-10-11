@@ -13,86 +13,108 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-
-	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewGetAppMessagesParams creates a new GetAppMessagesParams object
-// with the default values initialized.
+// NewGetAppMessagesParams creates a new GetAppMessagesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetAppMessagesParams() *GetAppMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetAppMessagesParams{
-		Limit: &limitDefault,
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetAppMessagesParamsWithTimeout creates a new GetAppMessagesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetAppMessagesParamsWithTimeout(timeout time.Duration) *GetAppMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetAppMessagesParams{
-		Limit: &limitDefault,
-
 		timeout: timeout,
 	}
 }
 
 // NewGetAppMessagesParamsWithContext creates a new GetAppMessagesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetAppMessagesParamsWithContext(ctx context.Context) *GetAppMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetAppMessagesParams{
-		Limit: &limitDefault,
-
 		Context: ctx,
 	}
 }
 
 // NewGetAppMessagesParamsWithHTTPClient creates a new GetAppMessagesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetAppMessagesParamsWithHTTPClient(client *http.Client) *GetAppMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetAppMessagesParams{
-		Limit:      &limitDefault,
 		HTTPClient: client,
 	}
 }
 
-/*GetAppMessagesParams contains all the parameters to send to the API endpoint
-for the get app messages operation typically these are written to a http.Request
+/*
+GetAppMessagesParams contains all the parameters to send to the API endpoint
+
+	for the get app messages operation.
+
+	Typically these are written to a http.Request.
 */
 type GetAppMessagesParams struct {
 
-	/*ID
-	  the application id
+	/* ID.
 
+	   the application id
+
+	   Format: int64
 	*/
 	ID int64
-	/*Limit
-	  the maximal amount of messages to return
 
+	/* Limit.
+
+	   the maximal amount of messages to return
+
+	   Default: 100
 	*/
 	Limit *int64
-	/*Since
-	  return all messages with an ID less than this value
 
+	/* Since.
+
+	   return all messages with an ID less than this value
+
+	   Format: int64
 	*/
 	Since *int64
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get app messages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetAppMessagesParams) WithDefaults() *GetAppMessagesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get app messages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetAppMessagesParams) SetDefaults() {
+	var (
+		limitDefault = int64(100)
+	)
+
+	val := GetAppMessagesParams{
+		Limit: &limitDefault,
+	}
+
+	val.timeout = o.timeout
+	val.Context = o.Context
+	val.HTTPClient = o.HTTPClient
+	*o = val
 }
 
 // WithTimeout adds the timeout to the get app messages params
@@ -178,32 +200,34 @@ func (o *GetAppMessagesParams) WriteToRequest(r runtime.ClientRequest, reg strfm
 
 		// query param limit
 		var qrLimit int64
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := swag.FormatInt64(qrLimit)
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Since != nil {
 
 		// query param since
 		var qrSince int64
+
 		if o.Since != nil {
 			qrSince = *o.Since
 		}
 		qSince := swag.FormatInt64(qrSince)
 		if qSince != "" {
+
 			if err := r.SetQueryParam("since", qSince); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

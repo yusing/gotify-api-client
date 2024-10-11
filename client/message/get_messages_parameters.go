@@ -13,81 +13,100 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-
-	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewGetMessagesParams creates a new GetMessagesParams object
-// with the default values initialized.
+// NewGetMessagesParams creates a new GetMessagesParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetMessagesParams() *GetMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetMessagesParams{
-		Limit: &limitDefault,
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetMessagesParamsWithTimeout creates a new GetMessagesParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetMessagesParamsWithTimeout(timeout time.Duration) *GetMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetMessagesParams{
-		Limit: &limitDefault,
-
 		timeout: timeout,
 	}
 }
 
 // NewGetMessagesParamsWithContext creates a new GetMessagesParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetMessagesParamsWithContext(ctx context.Context) *GetMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetMessagesParams{
-		Limit: &limitDefault,
-
 		Context: ctx,
 	}
 }
 
 // NewGetMessagesParamsWithHTTPClient creates a new GetMessagesParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetMessagesParamsWithHTTPClient(client *http.Client) *GetMessagesParams {
-	var (
-		limitDefault = int64(100)
-	)
 	return &GetMessagesParams{
-		Limit:      &limitDefault,
 		HTTPClient: client,
 	}
 }
 
-/*GetMessagesParams contains all the parameters to send to the API endpoint
-for the get messages operation typically these are written to a http.Request
+/*
+GetMessagesParams contains all the parameters to send to the API endpoint
+
+	for the get messages operation.
+
+	Typically these are written to a http.Request.
 */
 type GetMessagesParams struct {
 
-	/*Limit
-	  the maximal amount of messages to return
+	/* Limit.
 
+	   the maximal amount of messages to return
+
+	   Default: 100
 	*/
 	Limit *int64
-	/*Since
-	  return all messages with an ID less than this value
 
+	/* Since.
+
+	   return all messages with an ID less than this value
+
+	   Format: int64
 	*/
 	Since *int64
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get messages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetMessagesParams) WithDefaults() *GetMessagesParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get messages params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetMessagesParams) SetDefaults() {
+	var (
+		limitDefault = int64(100)
+	)
+
+	val := GetMessagesParams{
+		Limit: &limitDefault,
+	}
+
+	val.timeout = o.timeout
+	val.Context = o.Context
+	val.HTTPClient = o.HTTPClient
+	*o = val
 }
 
 // WithTimeout adds the timeout to the get messages params
@@ -157,32 +176,34 @@ func (o *GetMessagesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.R
 
 		// query param limit
 		var qrLimit int64
+
 		if o.Limit != nil {
 			qrLimit = *o.Limit
 		}
 		qLimit := swag.FormatInt64(qrLimit)
 		if qLimit != "" {
+
 			if err := r.SetQueryParam("limit", qLimit); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if o.Since != nil {
 
 		// query param since
 		var qrSince int64
+
 		if o.Since != nil {
 			qrSince = *o.Since
 		}
 		qSince := swag.FormatInt64(qrSince)
 		if qSince != "" {
+
 			if err := r.SetQueryParam("since", qSince); err != nil {
 				return err
 			}
 		}
-
 	}
 
 	if len(res) > 0 {

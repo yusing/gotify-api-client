@@ -6,14 +6,14 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetPluginConfigReader is a Reader for the GetPluginConfig structure.
@@ -24,51 +24,44 @@ type GetPluginConfigReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetPluginConfigReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetPluginConfigOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGetPluginConfigBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewGetPluginConfigUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetPluginConfigForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGetPluginConfigNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewGetPluginConfigInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /plugin/{id}/config] getPluginConfig", response, response.Code())
 	}
 }
 
@@ -77,7 +70,8 @@ func NewGetPluginConfigOK() *GetPluginConfigOK {
 	return &GetPluginConfigOK{}
 }
 
-/*GetPluginConfigOK handles this case with default header values.
+/*
+GetPluginConfigOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -85,8 +79,48 @@ type GetPluginConfigOK struct {
 	Payload interface{}
 }
 
+// IsSuccess returns true when this get plugin config o k response has a 2xx status code
+func (o *GetPluginConfigOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get plugin config o k response has a 3xx status code
+func (o *GetPluginConfigOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config o k response has a 4xx status code
+func (o *GetPluginConfigOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugin config o k response has a 5xx status code
+func (o *GetPluginConfigOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin config o k response a status code equal to that given
+func (o *GetPluginConfigOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get plugin config o k response
+func (o *GetPluginConfigOK) Code() int {
+	return 200
+}
+
 func (o *GetPluginConfigOK) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigOK %s", 200, payload)
+}
+
+func (o *GetPluginConfigOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigOK %s", 200, payload)
+}
+
+func (o *GetPluginConfigOK) GetPayload() interface{} {
+	return o.Payload
 }
 
 func (o *GetPluginConfigOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -104,7 +138,8 @@ func NewGetPluginConfigBadRequest() *GetPluginConfigBadRequest {
 	return &GetPluginConfigBadRequest{}
 }
 
-/*GetPluginConfigBadRequest handles this case with default header values.
+/*
+GetPluginConfigBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -112,8 +147,48 @@ type GetPluginConfigBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin config bad request response has a 2xx status code
+func (o *GetPluginConfigBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin config bad request response has a 3xx status code
+func (o *GetPluginConfigBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config bad request response has a 4xx status code
+func (o *GetPluginConfigBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin config bad request response has a 5xx status code
+func (o *GetPluginConfigBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin config bad request response a status code equal to that given
+func (o *GetPluginConfigBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get plugin config bad request response
+func (o *GetPluginConfigBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetPluginConfigBadRequest) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigBadRequest %s", 400, payload)
+}
+
+func (o *GetPluginConfigBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigBadRequest %s", 400, payload)
+}
+
+func (o *GetPluginConfigBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginConfigBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -133,7 +208,8 @@ func NewGetPluginConfigUnauthorized() *GetPluginConfigUnauthorized {
 	return &GetPluginConfigUnauthorized{}
 }
 
-/*GetPluginConfigUnauthorized handles this case with default header values.
+/*
+GetPluginConfigUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -141,8 +217,48 @@ type GetPluginConfigUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin config unauthorized response has a 2xx status code
+func (o *GetPluginConfigUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin config unauthorized response has a 3xx status code
+func (o *GetPluginConfigUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config unauthorized response has a 4xx status code
+func (o *GetPluginConfigUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin config unauthorized response has a 5xx status code
+func (o *GetPluginConfigUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin config unauthorized response a status code equal to that given
+func (o *GetPluginConfigUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get plugin config unauthorized response
+func (o *GetPluginConfigUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetPluginConfigUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginConfigUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginConfigUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginConfigUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -162,7 +278,8 @@ func NewGetPluginConfigForbidden() *GetPluginConfigForbidden {
 	return &GetPluginConfigForbidden{}
 }
 
-/*GetPluginConfigForbidden handles this case with default header values.
+/*
+GetPluginConfigForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -170,8 +287,48 @@ type GetPluginConfigForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin config forbidden response has a 2xx status code
+func (o *GetPluginConfigForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin config forbidden response has a 3xx status code
+func (o *GetPluginConfigForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config forbidden response has a 4xx status code
+func (o *GetPluginConfigForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin config forbidden response has a 5xx status code
+func (o *GetPluginConfigForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin config forbidden response a status code equal to that given
+func (o *GetPluginConfigForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get plugin config forbidden response
+func (o *GetPluginConfigForbidden) Code() int {
+	return 403
+}
+
 func (o *GetPluginConfigForbidden) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigForbidden %s", 403, payload)
+}
+
+func (o *GetPluginConfigForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigForbidden %s", 403, payload)
+}
+
+func (o *GetPluginConfigForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginConfigForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -191,7 +348,8 @@ func NewGetPluginConfigNotFound() *GetPluginConfigNotFound {
 	return &GetPluginConfigNotFound{}
 }
 
-/*GetPluginConfigNotFound handles this case with default header values.
+/*
+GetPluginConfigNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -199,8 +357,48 @@ type GetPluginConfigNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin config not found response has a 2xx status code
+func (o *GetPluginConfigNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin config not found response has a 3xx status code
+func (o *GetPluginConfigNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config not found response has a 4xx status code
+func (o *GetPluginConfigNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugin config not found response has a 5xx status code
+func (o *GetPluginConfigNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugin config not found response a status code equal to that given
+func (o *GetPluginConfigNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get plugin config not found response
+func (o *GetPluginConfigNotFound) Code() int {
+	return 404
+}
+
 func (o *GetPluginConfigNotFound) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigNotFound %s", 404, payload)
+}
+
+func (o *GetPluginConfigNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigNotFound %s", 404, payload)
+}
+
+func (o *GetPluginConfigNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginConfigNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -220,7 +418,8 @@ func NewGetPluginConfigInternalServerError() *GetPluginConfigInternalServerError
 	return &GetPluginConfigInternalServerError{}
 }
 
-/*GetPluginConfigInternalServerError handles this case with default header values.
+/*
+GetPluginConfigInternalServerError describes a response with status code 500, with default header values.
 
 Internal Server Error
 */
@@ -228,8 +427,48 @@ type GetPluginConfigInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugin config internal server error response has a 2xx status code
+func (o *GetPluginConfigInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugin config internal server error response has a 3xx status code
+func (o *GetPluginConfigInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugin config internal server error response has a 4xx status code
+func (o *GetPluginConfigInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugin config internal server error response has a 5xx status code
+func (o *GetPluginConfigInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this get plugin config internal server error response a status code equal to that given
+func (o *GetPluginConfigInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the get plugin config internal server error response
+func (o *GetPluginConfigInternalServerError) Code() int {
+	return 500
+}
+
 func (o *GetPluginConfigInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginConfigInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin/{id}/config][%d] getPluginConfigInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginConfigInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginConfigInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

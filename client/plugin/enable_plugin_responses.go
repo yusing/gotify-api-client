@@ -6,14 +6,14 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // EnablePluginReader is a Reader for the EnablePlugin structure.
@@ -24,44 +24,38 @@ type EnablePluginReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *EnablePluginReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewEnablePluginOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewEnablePluginUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewEnablePluginForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewEnablePluginNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewEnablePluginInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /plugin/{id}/enable] enablePlugin", response, response.Code())
 	}
 }
 
@@ -70,15 +64,50 @@ func NewEnablePluginOK() *EnablePluginOK {
 	return &EnablePluginOK{}
 }
 
-/*EnablePluginOK handles this case with default header values.
+/*
+EnablePluginOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type EnablePluginOK struct {
 }
 
+// IsSuccess returns true when this enable plugin o k response has a 2xx status code
+func (o *EnablePluginOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this enable plugin o k response has a 3xx status code
+func (o *EnablePluginOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable plugin o k response has a 4xx status code
+func (o *EnablePluginOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this enable plugin o k response has a 5xx status code
+func (o *EnablePluginOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable plugin o k response a status code equal to that given
+func (o *EnablePluginOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the enable plugin o k response
+func (o *EnablePluginOK) Code() int {
+	return 200
+}
+
 func (o *EnablePluginOK) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginOK ", 200)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginOK", 200)
+}
+
+func (o *EnablePluginOK) String() string {
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginOK", 200)
 }
 
 func (o *EnablePluginOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -91,7 +120,8 @@ func NewEnablePluginUnauthorized() *EnablePluginUnauthorized {
 	return &EnablePluginUnauthorized{}
 }
 
-/*EnablePluginUnauthorized handles this case with default header values.
+/*
+EnablePluginUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -99,8 +129,48 @@ type EnablePluginUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this enable plugin unauthorized response has a 2xx status code
+func (o *EnablePluginUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable plugin unauthorized response has a 3xx status code
+func (o *EnablePluginUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable plugin unauthorized response has a 4xx status code
+func (o *EnablePluginUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable plugin unauthorized response has a 5xx status code
+func (o *EnablePluginUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable plugin unauthorized response a status code equal to that given
+func (o *EnablePluginUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the enable plugin unauthorized response
+func (o *EnablePluginUnauthorized) Code() int {
+	return 401
+}
+
 func (o *EnablePluginUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginUnauthorized %s", 401, payload)
+}
+
+func (o *EnablePluginUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginUnauthorized %s", 401, payload)
+}
+
+func (o *EnablePluginUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *EnablePluginUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -120,7 +190,8 @@ func NewEnablePluginForbidden() *EnablePluginForbidden {
 	return &EnablePluginForbidden{}
 }
 
-/*EnablePluginForbidden handles this case with default header values.
+/*
+EnablePluginForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -128,8 +199,48 @@ type EnablePluginForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this enable plugin forbidden response has a 2xx status code
+func (o *EnablePluginForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable plugin forbidden response has a 3xx status code
+func (o *EnablePluginForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable plugin forbidden response has a 4xx status code
+func (o *EnablePluginForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable plugin forbidden response has a 5xx status code
+func (o *EnablePluginForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable plugin forbidden response a status code equal to that given
+func (o *EnablePluginForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the enable plugin forbidden response
+func (o *EnablePluginForbidden) Code() int {
+	return 403
+}
+
 func (o *EnablePluginForbidden) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginForbidden %s", 403, payload)
+}
+
+func (o *EnablePluginForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginForbidden %s", 403, payload)
+}
+
+func (o *EnablePluginForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *EnablePluginForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -149,7 +260,8 @@ func NewEnablePluginNotFound() *EnablePluginNotFound {
 	return &EnablePluginNotFound{}
 }
 
-/*EnablePluginNotFound handles this case with default header values.
+/*
+EnablePluginNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -157,8 +269,48 @@ type EnablePluginNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this enable plugin not found response has a 2xx status code
+func (o *EnablePluginNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable plugin not found response has a 3xx status code
+func (o *EnablePluginNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable plugin not found response has a 4xx status code
+func (o *EnablePluginNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this enable plugin not found response has a 5xx status code
+func (o *EnablePluginNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this enable plugin not found response a status code equal to that given
+func (o *EnablePluginNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the enable plugin not found response
+func (o *EnablePluginNotFound) Code() int {
+	return 404
+}
+
 func (o *EnablePluginNotFound) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginNotFound %s", 404, payload)
+}
+
+func (o *EnablePluginNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginNotFound %s", 404, payload)
+}
+
+func (o *EnablePluginNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *EnablePluginNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -178,7 +330,8 @@ func NewEnablePluginInternalServerError() *EnablePluginInternalServerError {
 	return &EnablePluginInternalServerError{}
 }
 
-/*EnablePluginInternalServerError handles this case with default header values.
+/*
+EnablePluginInternalServerError describes a response with status code 500, with default header values.
 
 Internal Server Error
 */
@@ -186,8 +339,48 @@ type EnablePluginInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this enable plugin internal server error response has a 2xx status code
+func (o *EnablePluginInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this enable plugin internal server error response has a 3xx status code
+func (o *EnablePluginInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this enable plugin internal server error response has a 4xx status code
+func (o *EnablePluginInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this enable plugin internal server error response has a 5xx status code
+func (o *EnablePluginInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this enable plugin internal server error response a status code equal to that given
+func (o *EnablePluginInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the enable plugin internal server error response
+func (o *EnablePluginInternalServerError) Code() int {
+	return 500
+}
+
 func (o *EnablePluginInternalServerError) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginInternalServerError %s", 500, payload)
+}
+
+func (o *EnablePluginInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/enable][%d] enablePluginInternalServerError %s", 500, payload)
+}
+
+func (o *EnablePluginInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *EnablePluginInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

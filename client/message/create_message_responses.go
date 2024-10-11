@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // CreateMessageReader is a Reader for the CreateMessage structure.
@@ -24,37 +24,32 @@ type CreateMessageReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateMessageReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateMessageOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateMessageBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewCreateMessageUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewCreateMessageForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /message] createMessage", response, response.Code())
 	}
 }
 
@@ -63,7 +58,8 @@ func NewCreateMessageOK() *CreateMessageOK {
 	return &CreateMessageOK{}
 }
 
-/*CreateMessageOK handles this case with default header values.
+/*
+CreateMessageOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -71,8 +67,48 @@ type CreateMessageOK struct {
 	Payload *models.MessageExternal
 }
 
+// IsSuccess returns true when this create message o k response has a 2xx status code
+func (o *CreateMessageOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create message o k response has a 3xx status code
+func (o *CreateMessageOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create message o k response has a 4xx status code
+func (o *CreateMessageOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create message o k response has a 5xx status code
+func (o *CreateMessageOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create message o k response a status code equal to that given
+func (o *CreateMessageOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the create message o k response
+func (o *CreateMessageOK) Code() int {
+	return 200
+}
+
 func (o *CreateMessageOK) Error() string {
-	return fmt.Sprintf("[POST /message][%d] createMessageOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageOK %s", 200, payload)
+}
+
+func (o *CreateMessageOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageOK %s", 200, payload)
+}
+
+func (o *CreateMessageOK) GetPayload() *models.MessageExternal {
+	return o.Payload
 }
 
 func (o *CreateMessageOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -92,7 +128,8 @@ func NewCreateMessageBadRequest() *CreateMessageBadRequest {
 	return &CreateMessageBadRequest{}
 }
 
-/*CreateMessageBadRequest handles this case with default header values.
+/*
+CreateMessageBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -100,8 +137,48 @@ type CreateMessageBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create message bad request response has a 2xx status code
+func (o *CreateMessageBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create message bad request response has a 3xx status code
+func (o *CreateMessageBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create message bad request response has a 4xx status code
+func (o *CreateMessageBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create message bad request response has a 5xx status code
+func (o *CreateMessageBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create message bad request response a status code equal to that given
+func (o *CreateMessageBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create message bad request response
+func (o *CreateMessageBadRequest) Code() int {
+	return 400
+}
+
 func (o *CreateMessageBadRequest) Error() string {
-	return fmt.Sprintf("[POST /message][%d] createMessageBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageBadRequest %s", 400, payload)
+}
+
+func (o *CreateMessageBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageBadRequest %s", 400, payload)
+}
+
+func (o *CreateMessageBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateMessageBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -121,7 +198,8 @@ func NewCreateMessageUnauthorized() *CreateMessageUnauthorized {
 	return &CreateMessageUnauthorized{}
 }
 
-/*CreateMessageUnauthorized handles this case with default header values.
+/*
+CreateMessageUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -129,8 +207,48 @@ type CreateMessageUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create message unauthorized response has a 2xx status code
+func (o *CreateMessageUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create message unauthorized response has a 3xx status code
+func (o *CreateMessageUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create message unauthorized response has a 4xx status code
+func (o *CreateMessageUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create message unauthorized response has a 5xx status code
+func (o *CreateMessageUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create message unauthorized response a status code equal to that given
+func (o *CreateMessageUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create message unauthorized response
+func (o *CreateMessageUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateMessageUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /message][%d] createMessageUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageUnauthorized %s", 401, payload)
+}
+
+func (o *CreateMessageUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageUnauthorized %s", 401, payload)
+}
+
+func (o *CreateMessageUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateMessageUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -150,7 +268,8 @@ func NewCreateMessageForbidden() *CreateMessageForbidden {
 	return &CreateMessageForbidden{}
 }
 
-/*CreateMessageForbidden handles this case with default header values.
+/*
+CreateMessageForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -158,8 +277,48 @@ type CreateMessageForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create message forbidden response has a 2xx status code
+func (o *CreateMessageForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create message forbidden response has a 3xx status code
+func (o *CreateMessageForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create message forbidden response has a 4xx status code
+func (o *CreateMessageForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create message forbidden response has a 5xx status code
+func (o *CreateMessageForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create message forbidden response a status code equal to that given
+func (o *CreateMessageForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create message forbidden response
+func (o *CreateMessageForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateMessageForbidden) Error() string {
-	return fmt.Sprintf("[POST /message][%d] createMessageForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageForbidden %s", 403, payload)
+}
+
+func (o *CreateMessageForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /message][%d] createMessageForbidden %s", 403, payload)
+}
+
+func (o *CreateMessageForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateMessageForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

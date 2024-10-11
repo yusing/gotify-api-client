@@ -1,4 +1,5 @@
-GOTIFY_VERSION=2.0.4
+GOTIFY_VERSION:=$(shell curl -sL https://api.github.com/repos/gotify/server/releases/latest | jq -r ".tag_name")
+GOSWAGGER_VERSION:=$(shell curl -sL https://api.github.com/repos/go-swagger/go-swagger/releases/latest | jq -r ".tag_name")
 BUILD=./build
 TEMP_SPEC=${BUILD}/gotify.json
 SWAGGER=./.tools/swagger
@@ -13,8 +14,8 @@ clean-tools:
 	rm -rf .tools
 
 get-tools: clean-tools
-	mkdir .tools || true
-	wget -O ${SWAGGER} https://github.com/go-swagger/go-swagger/releases/download/v0.19.0/${DOWNLOAD_SWAGGER}
+	mkdir -p .tools
+	wget -O ${SWAGGER} https://github.com/go-swagger/go-swagger/releases/download/${GOSWAGGER_VERSION}/${DOWNLOAD_SWAGGER}
 	chmod u+x .tools/*
 
 install:
@@ -22,11 +23,10 @@ install:
 
 obtain-spec:
 	mkdir build || true
-	wget -O ${TEMP_SPEC} https://raw.githubusercontent.com/gotify/server/v${GOTIFY_VERSION}/docs/spec.json
+	wget -O ${TEMP_SPEC} https://raw.githubusercontent.com/gotify/server/${GOTIFY_VERSION}/docs/spec.json
 
 generate: obtain-spec
 	${SWAGGER} generate client -f ${TEMP_SPEC} --additional-initialism=rest --skip-models
 
 clean:
 	rm -rf client build
-

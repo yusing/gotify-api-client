@@ -6,14 +6,41 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/go-openapi/runtime"
+	"fmt"
 
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/runtime"
+	httptransport "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new plugin API client.
-func New(transport runtime.ClientTransport, formats strfmt.Registry) *Client {
+func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
+}
+
+// New creates a new plugin API client with basic auth credentials.
+// It takes the following parameters:
+// - host: http host (github.com).
+// - basePath: any base path for the API client ("/v1", "/v3").
+// - scheme: http scheme ("http", "https").
+// - user: user for basic authentication header.
+// - password: password for basic authentication header.
+func NewClientWithBasicAuth(host, basePath, scheme, user, password string) ClientService {
+	transport := httptransport.New(host, basePath, []string{scheme})
+	transport.DefaultAuthentication = httptransport.BasicAuth(user, password)
+	return &Client{transport: transport, formats: strfmt.Default}
+}
+
+// New creates a new plugin API client with a bearer token for authentication.
+// It takes the following parameters:
+// - host: http host (github.com).
+// - basePath: any base path for the API client ("/v1", "/v3").
+// - scheme: http scheme ("http", "https").
+// - bearerToken: bearer token for Bearer authentication header.
+func NewClientWithBearerToken(host, basePath, scheme, bearerToken string) ClientService {
+	transport := httptransport.New(host, basePath, []string{scheme})
+	transport.DefaultAuthentication = httptransport.BearerToken(bearerToken)
+	return &Client{transport: transport, formats: strfmt.Default}
 }
 
 /*
@@ -24,16 +51,79 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
+// ClientOption may be used to customize the behavior of Client methods.
+type ClientOption func(*runtime.ClientOperation)
+
+// This client is generated with a few options you might find useful for your swagger spec.
+//
+// Feel free to add you own set of options.
+
+// WithContentType allows the client to force the Content-Type header
+// to negotiate a specific Consumer from the server.
+//
+// You may use this option to set arbitrary extensions to your MIME media type.
+func WithContentType(mime string) ClientOption {
+	return func(r *runtime.ClientOperation) {
+		r.ConsumesMediaTypes = []string{mime}
+	}
+}
+
+// WithContentTypeApplicationJSON sets the Content-Type header to "application/json".
+func WithContentTypeApplicationJSON(r *runtime.ClientOperation) {
+	r.ConsumesMediaTypes = []string{"application/json"}
+}
+
+// WithContentTypeApplicationxYaml sets the Content-Type header to "application/x-yaml".
+func WithContentTypeApplicationxYaml(r *runtime.ClientOperation) {
+	r.ConsumesMediaTypes = []string{"application/x-yaml"}
+}
+
+// WithAccept allows the client to force the Accept header
+// to negotiate a specific Producer from the server.
+//
+// You may use this option to set arbitrary extensions to your MIME media type.
+func WithAccept(mime string) ClientOption {
+	return func(r *runtime.ClientOperation) {
+		r.ProducesMediaTypes = []string{mime}
+	}
+}
+
+// WithAcceptApplicationJSON sets the Accept header to "application/json".
+func WithAcceptApplicationJSON(r *runtime.ClientOperation) {
+	r.ProducesMediaTypes = []string{"application/json"}
+}
+
+// WithAcceptApplicationxYaml sets the Accept header to "application/x-yaml".
+func WithAcceptApplicationxYaml(r *runtime.ClientOperation) {
+	r.ProducesMediaTypes = []string{"application/x-yaml"}
+}
+
+// ClientService is the interface for Client methods
+type ClientService interface {
+	DisablePlugin(params *DisablePluginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisablePluginOK, error)
+
+	EnablePlugin(params *EnablePluginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EnablePluginOK, error)
+
+	GetPluginConfig(params *GetPluginConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginConfigOK, error)
+
+	GetPluginDisplay(params *GetPluginDisplayParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginDisplayOK, error)
+
+	GetPlugins(params *GetPluginsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginsOK, error)
+
+	UpdatePluginConfig(params *UpdatePluginConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePluginConfigOK, error)
+
+	SetTransport(transport runtime.ClientTransport)
+}
+
 /*
 DisablePlugin disables a plugin
 */
-func (a *Client) DisablePlugin(params *DisablePluginParams, authInfo runtime.ClientAuthInfoWriter) (*DisablePluginOK, error) {
+func (a *Client) DisablePlugin(params *DisablePluginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DisablePluginOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDisablePluginParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "disablePlugin",
 		Method:             "POST",
 		PathPattern:        "/plugin/{id}/disable",
@@ -45,24 +135,34 @@ func (a *Client) DisablePlugin(params *DisablePluginParams, authInfo runtime.Cli
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*DisablePluginOK), nil
-
+	success, ok := result.(*DisablePluginOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for disablePlugin: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 EnablePlugin enables a plugin
 */
-func (a *Client) EnablePlugin(params *EnablePluginParams, authInfo runtime.ClientAuthInfoWriter) (*EnablePluginOK, error) {
+func (a *Client) EnablePlugin(params *EnablePluginParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*EnablePluginOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewEnablePluginParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "enablePlugin",
 		Method:             "POST",
 		PathPattern:        "/plugin/{id}/enable",
@@ -74,24 +174,34 @@ func (a *Client) EnablePlugin(params *EnablePluginParams, authInfo runtime.Clien
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*EnablePluginOK), nil
-
+	success, ok := result.(*EnablePluginOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for enablePlugin: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 GetPluginConfig gets y a m l configuration for configurer plugin
 */
-func (a *Client) GetPluginConfig(params *GetPluginConfigParams, authInfo runtime.ClientAuthInfoWriter) (*GetPluginConfigOK, error) {
+func (a *Client) GetPluginConfig(params *GetPluginConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginConfigOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPluginConfigParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getPluginConfig",
 		Method:             "GET",
 		PathPattern:        "/plugin/{id}/config",
@@ -103,24 +213,34 @@ func (a *Client) GetPluginConfig(params *GetPluginConfigParams, authInfo runtime
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetPluginConfigOK), nil
-
+	success, ok := result.(*GetPluginConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getPluginConfig: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 GetPluginDisplay gets display info for a displayer plugin
 */
-func (a *Client) GetPluginDisplay(params *GetPluginDisplayParams, authInfo runtime.ClientAuthInfoWriter) (*GetPluginDisplayOK, error) {
+func (a *Client) GetPluginDisplay(params *GetPluginDisplayParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginDisplayOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPluginDisplayParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getPluginDisplay",
 		Method:             "GET",
 		PathPattern:        "/plugin/{id}/display",
@@ -132,24 +252,34 @@ func (a *Client) GetPluginDisplay(params *GetPluginDisplayParams, authInfo runti
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetPluginDisplayOK), nil
-
+	success, ok := result.(*GetPluginDisplayOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getPluginDisplay: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 GetPlugins returns all plugins
 */
-func (a *Client) GetPlugins(params *GetPluginsParams, authInfo runtime.ClientAuthInfoWriter) (*GetPluginsOK, error) {
+func (a *Client) GetPlugins(params *GetPluginsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetPluginsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetPluginsParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "getPlugins",
 		Method:             "GET",
 		PathPattern:        "/plugin",
@@ -161,24 +291,34 @@ func (a *Client) GetPlugins(params *GetPluginsParams, authInfo runtime.ClientAut
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*GetPluginsOK), nil
-
+	success, ok := result.(*GetPluginsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getPlugins: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 /*
 UpdatePluginConfig updates y a m l configuration for configurer plugin
 */
-func (a *Client) UpdatePluginConfig(params *UpdatePluginConfigParams, authInfo runtime.ClientAuthInfoWriter) (*UpdatePluginConfigOK, error) {
+func (a *Client) UpdatePluginConfig(params *UpdatePluginConfigParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UpdatePluginConfigOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdatePluginConfigParams()
 	}
-
-	result, err := a.transport.Submit(&runtime.ClientOperation{
+	op := &runtime.ClientOperation{
 		ID:                 "updatePluginConfig",
 		Method:             "POST",
 		PathPattern:        "/plugin/{id}/config",
@@ -190,12 +330,23 @@ func (a *Client) UpdatePluginConfig(params *UpdatePluginConfigParams, authInfo r
 		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
-	})
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
-	return result.(*UpdatePluginConfigOK), nil
-
+	success, ok := result.(*UpdatePluginConfigOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for updatePluginConfig: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // SetTransport changes the transport on the client

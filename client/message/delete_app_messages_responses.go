@@ -6,14 +6,14 @@ package message
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // DeleteAppMessagesReader is a Reader for the DeleteAppMessages structure.
@@ -24,44 +24,38 @@ type DeleteAppMessagesReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DeleteAppMessagesReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewDeleteAppMessagesOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewDeleteAppMessagesBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewDeleteAppMessagesUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewDeleteAppMessagesForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDeleteAppMessagesNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[DELETE /application/{id}/message] deleteAppMessages", response, response.Code())
 	}
 }
 
@@ -70,15 +64,50 @@ func NewDeleteAppMessagesOK() *DeleteAppMessagesOK {
 	return &DeleteAppMessagesOK{}
 }
 
-/*DeleteAppMessagesOK handles this case with default header values.
+/*
+DeleteAppMessagesOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type DeleteAppMessagesOK struct {
 }
 
+// IsSuccess returns true when this delete app messages o k response has a 2xx status code
+func (o *DeleteAppMessagesOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this delete app messages o k response has a 3xx status code
+func (o *DeleteAppMessagesOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete app messages o k response has a 4xx status code
+func (o *DeleteAppMessagesOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this delete app messages o k response has a 5xx status code
+func (o *DeleteAppMessagesOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete app messages o k response a status code equal to that given
+func (o *DeleteAppMessagesOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the delete app messages o k response
+func (o *DeleteAppMessagesOK) Code() int {
+	return 200
+}
+
 func (o *DeleteAppMessagesOK) Error() string {
-	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesOK ", 200)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesOK", 200)
+}
+
+func (o *DeleteAppMessagesOK) String() string {
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesOK", 200)
 }
 
 func (o *DeleteAppMessagesOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -91,7 +120,8 @@ func NewDeleteAppMessagesBadRequest() *DeleteAppMessagesBadRequest {
 	return &DeleteAppMessagesBadRequest{}
 }
 
-/*DeleteAppMessagesBadRequest handles this case with default header values.
+/*
+DeleteAppMessagesBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -99,8 +129,48 @@ type DeleteAppMessagesBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete app messages bad request response has a 2xx status code
+func (o *DeleteAppMessagesBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete app messages bad request response has a 3xx status code
+func (o *DeleteAppMessagesBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete app messages bad request response has a 4xx status code
+func (o *DeleteAppMessagesBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete app messages bad request response has a 5xx status code
+func (o *DeleteAppMessagesBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete app messages bad request response a status code equal to that given
+func (o *DeleteAppMessagesBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the delete app messages bad request response
+func (o *DeleteAppMessagesBadRequest) Code() int {
+	return 400
+}
+
 func (o *DeleteAppMessagesBadRequest) Error() string {
-	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesBadRequest %s", 400, payload)
+}
+
+func (o *DeleteAppMessagesBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesBadRequest %s", 400, payload)
+}
+
+func (o *DeleteAppMessagesBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteAppMessagesBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -120,7 +190,8 @@ func NewDeleteAppMessagesUnauthorized() *DeleteAppMessagesUnauthorized {
 	return &DeleteAppMessagesUnauthorized{}
 }
 
-/*DeleteAppMessagesUnauthorized handles this case with default header values.
+/*
+DeleteAppMessagesUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -128,8 +199,48 @@ type DeleteAppMessagesUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete app messages unauthorized response has a 2xx status code
+func (o *DeleteAppMessagesUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete app messages unauthorized response has a 3xx status code
+func (o *DeleteAppMessagesUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete app messages unauthorized response has a 4xx status code
+func (o *DeleteAppMessagesUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete app messages unauthorized response has a 5xx status code
+func (o *DeleteAppMessagesUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete app messages unauthorized response a status code equal to that given
+func (o *DeleteAppMessagesUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the delete app messages unauthorized response
+func (o *DeleteAppMessagesUnauthorized) Code() int {
+	return 401
+}
+
 func (o *DeleteAppMessagesUnauthorized) Error() string {
-	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *DeleteAppMessagesUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesUnauthorized %s", 401, payload)
+}
+
+func (o *DeleteAppMessagesUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteAppMessagesUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -149,7 +260,8 @@ func NewDeleteAppMessagesForbidden() *DeleteAppMessagesForbidden {
 	return &DeleteAppMessagesForbidden{}
 }
 
-/*DeleteAppMessagesForbidden handles this case with default header values.
+/*
+DeleteAppMessagesForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -157,8 +269,48 @@ type DeleteAppMessagesForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete app messages forbidden response has a 2xx status code
+func (o *DeleteAppMessagesForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete app messages forbidden response has a 3xx status code
+func (o *DeleteAppMessagesForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete app messages forbidden response has a 4xx status code
+func (o *DeleteAppMessagesForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete app messages forbidden response has a 5xx status code
+func (o *DeleteAppMessagesForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete app messages forbidden response a status code equal to that given
+func (o *DeleteAppMessagesForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the delete app messages forbidden response
+func (o *DeleteAppMessagesForbidden) Code() int {
+	return 403
+}
+
 func (o *DeleteAppMessagesForbidden) Error() string {
-	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesForbidden %s", 403, payload)
+}
+
+func (o *DeleteAppMessagesForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesForbidden %s", 403, payload)
+}
+
+func (o *DeleteAppMessagesForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteAppMessagesForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -178,7 +330,8 @@ func NewDeleteAppMessagesNotFound() *DeleteAppMessagesNotFound {
 	return &DeleteAppMessagesNotFound{}
 }
 
-/*DeleteAppMessagesNotFound handles this case with default header values.
+/*
+DeleteAppMessagesNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -186,8 +339,48 @@ type DeleteAppMessagesNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this delete app messages not found response has a 2xx status code
+func (o *DeleteAppMessagesNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this delete app messages not found response has a 3xx status code
+func (o *DeleteAppMessagesNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this delete app messages not found response has a 4xx status code
+func (o *DeleteAppMessagesNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this delete app messages not found response has a 5xx status code
+func (o *DeleteAppMessagesNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this delete app messages not found response a status code equal to that given
+func (o *DeleteAppMessagesNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the delete app messages not found response
+func (o *DeleteAppMessagesNotFound) Code() int {
+	return 404
+}
+
 func (o *DeleteAppMessagesNotFound) Error() string {
-	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesNotFound %s", 404, payload)
+}
+
+func (o *DeleteAppMessagesNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[DELETE /application/{id}/message][%d] deleteAppMessagesNotFound %s", 404, payload)
+}
+
+func (o *DeleteAppMessagesNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DeleteAppMessagesNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

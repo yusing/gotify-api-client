@@ -6,14 +6,14 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetUserReader is a Reader for the GetUser structure.
@@ -24,44 +24,38 @@ type GetUserReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetUserReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetUserOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewGetUserBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewGetUserUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetUserForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGetUserNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /user/{id}] getUser", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewGetUserOK() *GetUserOK {
 	return &GetUserOK{}
 }
 
-/*GetUserOK handles this case with default header values.
+/*
+GetUserOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type GetUserOK struct {
 	Payload *models.UserExternal
 }
 
+// IsSuccess returns true when this get user o k response has a 2xx status code
+func (o *GetUserOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get user o k response has a 3xx status code
+func (o *GetUserOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get user o k response has a 4xx status code
+func (o *GetUserOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get user o k response has a 5xx status code
+func (o *GetUserOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get user o k response a status code equal to that given
+func (o *GetUserOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get user o k response
+func (o *GetUserOK) Code() int {
+	return 200
+}
+
 func (o *GetUserOK) Error() string {
-	return fmt.Sprintf("[GET /user/{id}][%d] getUserOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserOK %s", 200, payload)
+}
+
+func (o *GetUserOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserOK %s", 200, payload)
+}
+
+func (o *GetUserOK) GetPayload() *models.UserExternal {
+	return o.Payload
 }
 
 func (o *GetUserOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -99,7 +134,8 @@ func NewGetUserBadRequest() *GetUserBadRequest {
 	return &GetUserBadRequest{}
 }
 
-/*GetUserBadRequest handles this case with default header values.
+/*
+GetUserBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -107,8 +143,48 @@ type GetUserBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get user bad request response has a 2xx status code
+func (o *GetUserBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get user bad request response has a 3xx status code
+func (o *GetUserBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get user bad request response has a 4xx status code
+func (o *GetUserBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get user bad request response has a 5xx status code
+func (o *GetUserBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get user bad request response a status code equal to that given
+func (o *GetUserBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the get user bad request response
+func (o *GetUserBadRequest) Code() int {
+	return 400
+}
+
 func (o *GetUserBadRequest) Error() string {
-	return fmt.Sprintf("[GET /user/{id}][%d] getUserBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserBadRequest %s", 400, payload)
+}
+
+func (o *GetUserBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserBadRequest %s", 400, payload)
+}
+
+func (o *GetUserBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetUserBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -128,7 +204,8 @@ func NewGetUserUnauthorized() *GetUserUnauthorized {
 	return &GetUserUnauthorized{}
 }
 
-/*GetUserUnauthorized handles this case with default header values.
+/*
+GetUserUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -136,8 +213,48 @@ type GetUserUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get user unauthorized response has a 2xx status code
+func (o *GetUserUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get user unauthorized response has a 3xx status code
+func (o *GetUserUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get user unauthorized response has a 4xx status code
+func (o *GetUserUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get user unauthorized response has a 5xx status code
+func (o *GetUserUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get user unauthorized response a status code equal to that given
+func (o *GetUserUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get user unauthorized response
+func (o *GetUserUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetUserUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /user/{id}][%d] getUserUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserUnauthorized %s", 401, payload)
+}
+
+func (o *GetUserUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserUnauthorized %s", 401, payload)
+}
+
+func (o *GetUserUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetUserUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -157,7 +274,8 @@ func NewGetUserForbidden() *GetUserForbidden {
 	return &GetUserForbidden{}
 }
 
-/*GetUserForbidden handles this case with default header values.
+/*
+GetUserForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -165,8 +283,48 @@ type GetUserForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get user forbidden response has a 2xx status code
+func (o *GetUserForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get user forbidden response has a 3xx status code
+func (o *GetUserForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get user forbidden response has a 4xx status code
+func (o *GetUserForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get user forbidden response has a 5xx status code
+func (o *GetUserForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get user forbidden response a status code equal to that given
+func (o *GetUserForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get user forbidden response
+func (o *GetUserForbidden) Code() int {
+	return 403
+}
+
 func (o *GetUserForbidden) Error() string {
-	return fmt.Sprintf("[GET /user/{id}][%d] getUserForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserForbidden %s", 403, payload)
+}
+
+func (o *GetUserForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserForbidden %s", 403, payload)
+}
+
+func (o *GetUserForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetUserForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -186,7 +344,8 @@ func NewGetUserNotFound() *GetUserNotFound {
 	return &GetUserNotFound{}
 }
 
-/*GetUserNotFound handles this case with default header values.
+/*
+GetUserNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -194,8 +353,48 @@ type GetUserNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get user not found response has a 2xx status code
+func (o *GetUserNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get user not found response has a 3xx status code
+func (o *GetUserNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get user not found response has a 4xx status code
+func (o *GetUserNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get user not found response has a 5xx status code
+func (o *GetUserNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get user not found response a status code equal to that given
+func (o *GetUserNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get user not found response
+func (o *GetUserNotFound) Code() int {
+	return 404
+}
+
 func (o *GetUserNotFound) Error() string {
-	return fmt.Sprintf("[GET /user/{id}][%d] getUserNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserNotFound %s", 404, payload)
+}
+
+func (o *GetUserNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /user/{id}][%d] getUserNotFound %s", 404, payload)
+}
+
+func (o *GetUserNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetUserNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -13,56 +13,71 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
-
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
 )
 
-// NewCurrentUserParams creates a new CurrentUserParams object
-// with the default values initialized.
+// NewCurrentUserParams creates a new CurrentUserParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewCurrentUserParams() *CurrentUserParams {
-
 	return &CurrentUserParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewCurrentUserParamsWithTimeout creates a new CurrentUserParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewCurrentUserParamsWithTimeout(timeout time.Duration) *CurrentUserParams {
-
 	return &CurrentUserParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewCurrentUserParamsWithContext creates a new CurrentUserParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewCurrentUserParamsWithContext(ctx context.Context) *CurrentUserParams {
-
 	return &CurrentUserParams{
-
 		Context: ctx,
 	}
 }
 
 // NewCurrentUserParamsWithHTTPClient creates a new CurrentUserParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewCurrentUserParamsWithHTTPClient(client *http.Client) *CurrentUserParams {
-
 	return &CurrentUserParams{
 		HTTPClient: client,
 	}
 }
 
-/*CurrentUserParams contains all the parameters to send to the API endpoint
-for the current user operation typically these are written to a http.Request
+/*
+CurrentUserParams contains all the parameters to send to the API endpoint
+
+	for the current user operation.
+
+	Typically these are written to a http.Request.
 */
 type CurrentUserParams struct {
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the current user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CurrentUserParams) WithDefaults() *CurrentUserParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the current user params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *CurrentUserParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the current user params

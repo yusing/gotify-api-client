@@ -53,7 +53,7 @@ func main() {
 
 ## Update Instructions
 
-* Change version in [Makefile](Makefile).
+* Run `make get-tools` to get latest `go-swagger`
 * Run `make clean generate`
 * Commit changes
 

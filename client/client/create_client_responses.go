@@ -6,14 +6,14 @@ package client
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // CreateClientReader is a Reader for the CreateClient structure.
@@ -24,37 +24,32 @@ type CreateClientReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateClientReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateClientOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateClientBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewCreateClientUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewCreateClientForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /client] createClient", response, response.Code())
 	}
 }
 
@@ -63,7 +58,8 @@ func NewCreateClientOK() *CreateClientOK {
 	return &CreateClientOK{}
 }
 
-/*CreateClientOK handles this case with default header values.
+/*
+CreateClientOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -71,8 +67,48 @@ type CreateClientOK struct {
 	Payload *models.Client
 }
 
+// IsSuccess returns true when this create client o k response has a 2xx status code
+func (o *CreateClientOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create client o k response has a 3xx status code
+func (o *CreateClientOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create client o k response has a 4xx status code
+func (o *CreateClientOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create client o k response has a 5xx status code
+func (o *CreateClientOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create client o k response a status code equal to that given
+func (o *CreateClientOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the create client o k response
+func (o *CreateClientOK) Code() int {
+	return 200
+}
+
 func (o *CreateClientOK) Error() string {
-	return fmt.Sprintf("[POST /client][%d] createClientOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientOK %s", 200, payload)
+}
+
+func (o *CreateClientOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientOK %s", 200, payload)
+}
+
+func (o *CreateClientOK) GetPayload() *models.Client {
+	return o.Payload
 }
 
 func (o *CreateClientOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -92,7 +128,8 @@ func NewCreateClientBadRequest() *CreateClientBadRequest {
 	return &CreateClientBadRequest{}
 }
 
-/*CreateClientBadRequest handles this case with default header values.
+/*
+CreateClientBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -100,8 +137,48 @@ type CreateClientBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create client bad request response has a 2xx status code
+func (o *CreateClientBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create client bad request response has a 3xx status code
+func (o *CreateClientBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create client bad request response has a 4xx status code
+func (o *CreateClientBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create client bad request response has a 5xx status code
+func (o *CreateClientBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create client bad request response a status code equal to that given
+func (o *CreateClientBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create client bad request response
+func (o *CreateClientBadRequest) Code() int {
+	return 400
+}
+
 func (o *CreateClientBadRequest) Error() string {
-	return fmt.Sprintf("[POST /client][%d] createClientBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientBadRequest %s", 400, payload)
+}
+
+func (o *CreateClientBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientBadRequest %s", 400, payload)
+}
+
+func (o *CreateClientBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateClientBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -121,7 +198,8 @@ func NewCreateClientUnauthorized() *CreateClientUnauthorized {
 	return &CreateClientUnauthorized{}
 }
 
-/*CreateClientUnauthorized handles this case with default header values.
+/*
+CreateClientUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -129,8 +207,48 @@ type CreateClientUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create client unauthorized response has a 2xx status code
+func (o *CreateClientUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create client unauthorized response has a 3xx status code
+func (o *CreateClientUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create client unauthorized response has a 4xx status code
+func (o *CreateClientUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create client unauthorized response has a 5xx status code
+func (o *CreateClientUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create client unauthorized response a status code equal to that given
+func (o *CreateClientUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create client unauthorized response
+func (o *CreateClientUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateClientUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /client][%d] createClientUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientUnauthorized %s", 401, payload)
+}
+
+func (o *CreateClientUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientUnauthorized %s", 401, payload)
+}
+
+func (o *CreateClientUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateClientUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -150,7 +268,8 @@ func NewCreateClientForbidden() *CreateClientForbidden {
 	return &CreateClientForbidden{}
 }
 
-/*CreateClientForbidden handles this case with default header values.
+/*
+CreateClientForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -158,8 +277,48 @@ type CreateClientForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create client forbidden response has a 2xx status code
+func (o *CreateClientForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create client forbidden response has a 3xx status code
+func (o *CreateClientForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create client forbidden response has a 4xx status code
+func (o *CreateClientForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create client forbidden response has a 5xx status code
+func (o *CreateClientForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create client forbidden response a status code equal to that given
+func (o *CreateClientForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create client forbidden response
+func (o *CreateClientForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateClientForbidden) Error() string {
-	return fmt.Sprintf("[POST /client][%d] createClientForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientForbidden %s", 403, payload)
+}
+
+func (o *CreateClientForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /client][%d] createClientForbidden %s", 403, payload)
+}
+
+func (o *CreateClientForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateClientForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

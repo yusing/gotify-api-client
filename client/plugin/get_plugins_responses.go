@@ -6,14 +6,14 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // GetPluginsReader is a Reader for the GetPlugins structure.
@@ -24,44 +24,38 @@ type GetPluginsReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *GetPluginsReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewGetPluginsOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewGetPluginsUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewGetPluginsForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewGetPluginsNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewGetPluginsInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /plugin] getPlugins", response, response.Code())
 	}
 }
 
@@ -70,7 +64,8 @@ func NewGetPluginsOK() *GetPluginsOK {
 	return &GetPluginsOK{}
 }
 
-/*GetPluginsOK handles this case with default header values.
+/*
+GetPluginsOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -78,8 +73,48 @@ type GetPluginsOK struct {
 	Payload []*models.PluginConfExternal
 }
 
+// IsSuccess returns true when this get plugins o k response has a 2xx status code
+func (o *GetPluginsOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this get plugins o k response has a 3xx status code
+func (o *GetPluginsOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugins o k response has a 4xx status code
+func (o *GetPluginsOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugins o k response has a 5xx status code
+func (o *GetPluginsOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugins o k response a status code equal to that given
+func (o *GetPluginsOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the get plugins o k response
+func (o *GetPluginsOK) Code() int {
+	return 200
+}
+
 func (o *GetPluginsOK) Error() string {
-	return fmt.Sprintf("[GET /plugin][%d] getPluginsOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsOK %s", 200, payload)
+}
+
+func (o *GetPluginsOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsOK %s", 200, payload)
+}
+
+func (o *GetPluginsOK) GetPayload() []*models.PluginConfExternal {
+	return o.Payload
 }
 
 func (o *GetPluginsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -97,7 +132,8 @@ func NewGetPluginsUnauthorized() *GetPluginsUnauthorized {
 	return &GetPluginsUnauthorized{}
 }
 
-/*GetPluginsUnauthorized handles this case with default header values.
+/*
+GetPluginsUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -105,8 +141,48 @@ type GetPluginsUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugins unauthorized response has a 2xx status code
+func (o *GetPluginsUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugins unauthorized response has a 3xx status code
+func (o *GetPluginsUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugins unauthorized response has a 4xx status code
+func (o *GetPluginsUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugins unauthorized response has a 5xx status code
+func (o *GetPluginsUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugins unauthorized response a status code equal to that given
+func (o *GetPluginsUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the get plugins unauthorized response
+func (o *GetPluginsUnauthorized) Code() int {
+	return 401
+}
+
 func (o *GetPluginsUnauthorized) Error() string {
-	return fmt.Sprintf("[GET /plugin][%d] getPluginsUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginsUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsUnauthorized %s", 401, payload)
+}
+
+func (o *GetPluginsUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginsUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -126,7 +202,8 @@ func NewGetPluginsForbidden() *GetPluginsForbidden {
 	return &GetPluginsForbidden{}
 }
 
-/*GetPluginsForbidden handles this case with default header values.
+/*
+GetPluginsForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -134,8 +211,48 @@ type GetPluginsForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugins forbidden response has a 2xx status code
+func (o *GetPluginsForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugins forbidden response has a 3xx status code
+func (o *GetPluginsForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugins forbidden response has a 4xx status code
+func (o *GetPluginsForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugins forbidden response has a 5xx status code
+func (o *GetPluginsForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugins forbidden response a status code equal to that given
+func (o *GetPluginsForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the get plugins forbidden response
+func (o *GetPluginsForbidden) Code() int {
+	return 403
+}
+
 func (o *GetPluginsForbidden) Error() string {
-	return fmt.Sprintf("[GET /plugin][%d] getPluginsForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsForbidden %s", 403, payload)
+}
+
+func (o *GetPluginsForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsForbidden %s", 403, payload)
+}
+
+func (o *GetPluginsForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginsForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -155,7 +272,8 @@ func NewGetPluginsNotFound() *GetPluginsNotFound {
 	return &GetPluginsNotFound{}
 }
 
-/*GetPluginsNotFound handles this case with default header values.
+/*
+GetPluginsNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -163,8 +281,48 @@ type GetPluginsNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugins not found response has a 2xx status code
+func (o *GetPluginsNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugins not found response has a 3xx status code
+func (o *GetPluginsNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugins not found response has a 4xx status code
+func (o *GetPluginsNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this get plugins not found response has a 5xx status code
+func (o *GetPluginsNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this get plugins not found response a status code equal to that given
+func (o *GetPluginsNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the get plugins not found response
+func (o *GetPluginsNotFound) Code() int {
+	return 404
+}
+
 func (o *GetPluginsNotFound) Error() string {
-	return fmt.Sprintf("[GET /plugin][%d] getPluginsNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsNotFound %s", 404, payload)
+}
+
+func (o *GetPluginsNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsNotFound %s", 404, payload)
+}
+
+func (o *GetPluginsNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -184,7 +342,8 @@ func NewGetPluginsInternalServerError() *GetPluginsInternalServerError {
 	return &GetPluginsInternalServerError{}
 }
 
-/*GetPluginsInternalServerError handles this case with default header values.
+/*
+GetPluginsInternalServerError describes a response with status code 500, with default header values.
 
 Internal Server Error
 */
@@ -192,8 +351,48 @@ type GetPluginsInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this get plugins internal server error response has a 2xx status code
+func (o *GetPluginsInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this get plugins internal server error response has a 3xx status code
+func (o *GetPluginsInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this get plugins internal server error response has a 4xx status code
+func (o *GetPluginsInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this get plugins internal server error response has a 5xx status code
+func (o *GetPluginsInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this get plugins internal server error response a status code equal to that given
+func (o *GetPluginsInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the get plugins internal server error response
+func (o *GetPluginsInternalServerError) Code() int {
+	return 500
+}
+
 func (o *GetPluginsInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /plugin][%d] getPluginsInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginsInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[GET /plugin][%d] getPluginsInternalServerError %s", 500, payload)
+}
+
+func (o *GetPluginsInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *GetPluginsInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

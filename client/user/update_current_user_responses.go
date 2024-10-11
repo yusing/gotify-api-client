@@ -6,14 +6,14 @@ package user
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // UpdateCurrentUserReader is a Reader for the UpdateCurrentUser structure.
@@ -24,37 +24,32 @@ type UpdateCurrentUserReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *UpdateCurrentUserReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewUpdateCurrentUserOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewUpdateCurrentUserBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewUpdateCurrentUserUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewUpdateCurrentUserForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /current/user/password] updateCurrentUser", response, response.Code())
 	}
 }
 
@@ -63,15 +58,50 @@ func NewUpdateCurrentUserOK() *UpdateCurrentUserOK {
 	return &UpdateCurrentUserOK{}
 }
 
-/*UpdateCurrentUserOK handles this case with default header values.
+/*
+UpdateCurrentUserOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type UpdateCurrentUserOK struct {
 }
 
+// IsSuccess returns true when this update current user o k response has a 2xx status code
+func (o *UpdateCurrentUserOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this update current user o k response has a 3xx status code
+func (o *UpdateCurrentUserOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update current user o k response has a 4xx status code
+func (o *UpdateCurrentUserOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this update current user o k response has a 5xx status code
+func (o *UpdateCurrentUserOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update current user o k response a status code equal to that given
+func (o *UpdateCurrentUserOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the update current user o k response
+func (o *UpdateCurrentUserOK) Code() int {
+	return 200
+}
+
 func (o *UpdateCurrentUserOK) Error() string {
-	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserOK ", 200)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserOK", 200)
+}
+
+func (o *UpdateCurrentUserOK) String() string {
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserOK", 200)
 }
 
 func (o *UpdateCurrentUserOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -84,7 +114,8 @@ func NewUpdateCurrentUserBadRequest() *UpdateCurrentUserBadRequest {
 	return &UpdateCurrentUserBadRequest{}
 }
 
-/*UpdateCurrentUserBadRequest handles this case with default header values.
+/*
+UpdateCurrentUserBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -92,8 +123,48 @@ type UpdateCurrentUserBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update current user bad request response has a 2xx status code
+func (o *UpdateCurrentUserBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update current user bad request response has a 3xx status code
+func (o *UpdateCurrentUserBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update current user bad request response has a 4xx status code
+func (o *UpdateCurrentUserBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update current user bad request response has a 5xx status code
+func (o *UpdateCurrentUserBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update current user bad request response a status code equal to that given
+func (o *UpdateCurrentUserBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the update current user bad request response
+func (o *UpdateCurrentUserBadRequest) Code() int {
+	return 400
+}
+
 func (o *UpdateCurrentUserBadRequest) Error() string {
-	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserBadRequest %s", 400, payload)
+}
+
+func (o *UpdateCurrentUserBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserBadRequest %s", 400, payload)
+}
+
+func (o *UpdateCurrentUserBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateCurrentUserBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -113,7 +184,8 @@ func NewUpdateCurrentUserUnauthorized() *UpdateCurrentUserUnauthorized {
 	return &UpdateCurrentUserUnauthorized{}
 }
 
-/*UpdateCurrentUserUnauthorized handles this case with default header values.
+/*
+UpdateCurrentUserUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -121,8 +193,48 @@ type UpdateCurrentUserUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update current user unauthorized response has a 2xx status code
+func (o *UpdateCurrentUserUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update current user unauthorized response has a 3xx status code
+func (o *UpdateCurrentUserUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update current user unauthorized response has a 4xx status code
+func (o *UpdateCurrentUserUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update current user unauthorized response has a 5xx status code
+func (o *UpdateCurrentUserUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update current user unauthorized response a status code equal to that given
+func (o *UpdateCurrentUserUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the update current user unauthorized response
+func (o *UpdateCurrentUserUnauthorized) Code() int {
+	return 401
+}
+
 func (o *UpdateCurrentUserUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateCurrentUserUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserUnauthorized %s", 401, payload)
+}
+
+func (o *UpdateCurrentUserUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateCurrentUserUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -142,7 +254,8 @@ func NewUpdateCurrentUserForbidden() *UpdateCurrentUserForbidden {
 	return &UpdateCurrentUserForbidden{}
 }
 
-/*UpdateCurrentUserForbidden handles this case with default header values.
+/*
+UpdateCurrentUserForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -150,8 +263,48 @@ type UpdateCurrentUserForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this update current user forbidden response has a 2xx status code
+func (o *UpdateCurrentUserForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this update current user forbidden response has a 3xx status code
+func (o *UpdateCurrentUserForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this update current user forbidden response has a 4xx status code
+func (o *UpdateCurrentUserForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this update current user forbidden response has a 5xx status code
+func (o *UpdateCurrentUserForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this update current user forbidden response a status code equal to that given
+func (o *UpdateCurrentUserForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the update current user forbidden response
+func (o *UpdateCurrentUserForbidden) Code() int {
+	return 403
+}
+
 func (o *UpdateCurrentUserForbidden) Error() string {
-	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserForbidden %s", 403, payload)
+}
+
+func (o *UpdateCurrentUserForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /current/user/password][%d] updateCurrentUserForbidden %s", 403, payload)
+}
+
+func (o *UpdateCurrentUserForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *UpdateCurrentUserForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -13,64 +13,81 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	cr "github.com/go-openapi/runtime/client"
+	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
-
-	strfmt "github.com/go-openapi/strfmt"
 )
 
-// NewGetPluginDisplayParams creates a new GetPluginDisplayParams object
-// with the default values initialized.
+// NewGetPluginDisplayParams creates a new GetPluginDisplayParams object,
+// with the default timeout for this client.
+//
+// Default values are not hydrated, since defaults are normally applied by the API server side.
+//
+// To enforce default values in parameter, use SetDefaults or WithDefaults.
 func NewGetPluginDisplayParams() *GetPluginDisplayParams {
-	var ()
 	return &GetPluginDisplayParams{
-
 		timeout: cr.DefaultTimeout,
 	}
 }
 
 // NewGetPluginDisplayParamsWithTimeout creates a new GetPluginDisplayParams object
-// with the default values initialized, and the ability to set a timeout on a request
+// with the ability to set a timeout on a request.
 func NewGetPluginDisplayParamsWithTimeout(timeout time.Duration) *GetPluginDisplayParams {
-	var ()
 	return &GetPluginDisplayParams{
-
 		timeout: timeout,
 	}
 }
 
 // NewGetPluginDisplayParamsWithContext creates a new GetPluginDisplayParams object
-// with the default values initialized, and the ability to set a context for a request
+// with the ability to set a context for a request.
 func NewGetPluginDisplayParamsWithContext(ctx context.Context) *GetPluginDisplayParams {
-	var ()
 	return &GetPluginDisplayParams{
-
 		Context: ctx,
 	}
 }
 
 // NewGetPluginDisplayParamsWithHTTPClient creates a new GetPluginDisplayParams object
-// with the default values initialized, and the ability to set a custom HTTPClient for a request
+// with the ability to set a custom HTTPClient for a request.
 func NewGetPluginDisplayParamsWithHTTPClient(client *http.Client) *GetPluginDisplayParams {
-	var ()
 	return &GetPluginDisplayParams{
 		HTTPClient: client,
 	}
 }
 
-/*GetPluginDisplayParams contains all the parameters to send to the API endpoint
-for the get plugin display operation typically these are written to a http.Request
+/*
+GetPluginDisplayParams contains all the parameters to send to the API endpoint
+
+	for the get plugin display operation.
+
+	Typically these are written to a http.Request.
 */
 type GetPluginDisplayParams struct {
 
-	/*ID
-	  the plugin id
+	/* ID.
 
+	   the plugin id
+
+	   Format: int64
 	*/
 	ID int64
 
 	timeout    time.Duration
 	Context    context.Context
 	HTTPClient *http.Client
+}
+
+// WithDefaults hydrates default values in the get plugin display params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetPluginDisplayParams) WithDefaults() *GetPluginDisplayParams {
+	o.SetDefaults()
+	return o
+}
+
+// SetDefaults hydrates default values in the get plugin display params (not the query body).
+//
+// All values with no default are reset to their zero value.
+func (o *GetPluginDisplayParams) SetDefaults() {
+	// no default values defined for this parameter
 }
 
 // WithTimeout adds the timeout to the get plugin display params

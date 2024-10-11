@@ -6,14 +6,14 @@ package plugin
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // DisablePluginReader is a Reader for the DisablePlugin structure.
@@ -24,44 +24,38 @@ type DisablePluginReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *DisablePluginReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewDisablePluginOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 401:
 		result := NewDisablePluginUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewDisablePluginForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 404:
 		result := NewDisablePluginNotFound()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 500:
 		result := NewDisablePluginInternalServerError()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /plugin/{id}/disable] disablePlugin", response, response.Code())
 	}
 }
 
@@ -70,15 +64,50 @@ func NewDisablePluginOK() *DisablePluginOK {
 	return &DisablePluginOK{}
 }
 
-/*DisablePluginOK handles this case with default header values.
+/*
+DisablePluginOK describes a response with status code 200, with default header values.
 
 Ok
 */
 type DisablePluginOK struct {
 }
 
+// IsSuccess returns true when this disable plugin o k response has a 2xx status code
+func (o *DisablePluginOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this disable plugin o k response has a 3xx status code
+func (o *DisablePluginOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable plugin o k response has a 4xx status code
+func (o *DisablePluginOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this disable plugin o k response has a 5xx status code
+func (o *DisablePluginOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable plugin o k response a status code equal to that given
+func (o *DisablePluginOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the disable plugin o k response
+func (o *DisablePluginOK) Code() int {
+	return 200
+}
+
 func (o *DisablePluginOK) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginOK ", 200)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginOK", 200)
+}
+
+func (o *DisablePluginOK) String() string {
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginOK", 200)
 }
 
 func (o *DisablePluginOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -91,7 +120,8 @@ func NewDisablePluginUnauthorized() *DisablePluginUnauthorized {
 	return &DisablePluginUnauthorized{}
 }
 
-/*DisablePluginUnauthorized handles this case with default header values.
+/*
+DisablePluginUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -99,8 +129,48 @@ type DisablePluginUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this disable plugin unauthorized response has a 2xx status code
+func (o *DisablePluginUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this disable plugin unauthorized response has a 3xx status code
+func (o *DisablePluginUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable plugin unauthorized response has a 4xx status code
+func (o *DisablePluginUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this disable plugin unauthorized response has a 5xx status code
+func (o *DisablePluginUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable plugin unauthorized response a status code equal to that given
+func (o *DisablePluginUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the disable plugin unauthorized response
+func (o *DisablePluginUnauthorized) Code() int {
+	return 401
+}
+
 func (o *DisablePluginUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginUnauthorized %s", 401, payload)
+}
+
+func (o *DisablePluginUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginUnauthorized %s", 401, payload)
+}
+
+func (o *DisablePluginUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DisablePluginUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -120,7 +190,8 @@ func NewDisablePluginForbidden() *DisablePluginForbidden {
 	return &DisablePluginForbidden{}
 }
 
-/*DisablePluginForbidden handles this case with default header values.
+/*
+DisablePluginForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -128,8 +199,48 @@ type DisablePluginForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this disable plugin forbidden response has a 2xx status code
+func (o *DisablePluginForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this disable plugin forbidden response has a 3xx status code
+func (o *DisablePluginForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable plugin forbidden response has a 4xx status code
+func (o *DisablePluginForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this disable plugin forbidden response has a 5xx status code
+func (o *DisablePluginForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable plugin forbidden response a status code equal to that given
+func (o *DisablePluginForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the disable plugin forbidden response
+func (o *DisablePluginForbidden) Code() int {
+	return 403
+}
+
 func (o *DisablePluginForbidden) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginForbidden %s", 403, payload)
+}
+
+func (o *DisablePluginForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginForbidden %s", 403, payload)
+}
+
+func (o *DisablePluginForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DisablePluginForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -149,7 +260,8 @@ func NewDisablePluginNotFound() *DisablePluginNotFound {
 	return &DisablePluginNotFound{}
 }
 
-/*DisablePluginNotFound handles this case with default header values.
+/*
+DisablePluginNotFound describes a response with status code 404, with default header values.
 
 Not Found
 */
@@ -157,8 +269,48 @@ type DisablePluginNotFound struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this disable plugin not found response has a 2xx status code
+func (o *DisablePluginNotFound) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this disable plugin not found response has a 3xx status code
+func (o *DisablePluginNotFound) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable plugin not found response has a 4xx status code
+func (o *DisablePluginNotFound) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this disable plugin not found response has a 5xx status code
+func (o *DisablePluginNotFound) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this disable plugin not found response a status code equal to that given
+func (o *DisablePluginNotFound) IsCode(code int) bool {
+	return code == 404
+}
+
+// Code gets the status code for the disable plugin not found response
+func (o *DisablePluginNotFound) Code() int {
+	return 404
+}
+
 func (o *DisablePluginNotFound) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginNotFound  %+v", 404, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginNotFound %s", 404, payload)
+}
+
+func (o *DisablePluginNotFound) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginNotFound %s", 404, payload)
+}
+
+func (o *DisablePluginNotFound) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DisablePluginNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -178,7 +330,8 @@ func NewDisablePluginInternalServerError() *DisablePluginInternalServerError {
 	return &DisablePluginInternalServerError{}
 }
 
-/*DisablePluginInternalServerError handles this case with default header values.
+/*
+DisablePluginInternalServerError describes a response with status code 500, with default header values.
 
 Internal Server Error
 */
@@ -186,8 +339,48 @@ type DisablePluginInternalServerError struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this disable plugin internal server error response has a 2xx status code
+func (o *DisablePluginInternalServerError) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this disable plugin internal server error response has a 3xx status code
+func (o *DisablePluginInternalServerError) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this disable plugin internal server error response has a 4xx status code
+func (o *DisablePluginInternalServerError) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this disable plugin internal server error response has a 5xx status code
+func (o *DisablePluginInternalServerError) IsServerError() bool {
+	return true
+}
+
+// IsCode returns true when this disable plugin internal server error response a status code equal to that given
+func (o *DisablePluginInternalServerError) IsCode(code int) bool {
+	return code == 500
+}
+
+// Code gets the status code for the disable plugin internal server error response
+func (o *DisablePluginInternalServerError) Code() int {
+	return 500
+}
+
 func (o *DisablePluginInternalServerError) Error() string {
-	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginInternalServerError  %+v", 500, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginInternalServerError %s", 500, payload)
+}
+
+func (o *DisablePluginInternalServerError) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /plugin/{id}/disable][%d] disablePluginInternalServerError %s", 500, payload)
+}
+
+func (o *DisablePluginInternalServerError) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *DisablePluginInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

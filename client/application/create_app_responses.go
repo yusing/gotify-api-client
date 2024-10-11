@@ -6,14 +6,14 @@ package application
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 
-	strfmt "github.com/go-openapi/strfmt"
-
-	models "github.com/gotify/go-api-client/v2/models"
+	"github.com/yusing/gotify-api-client/v2/models"
 )
 
 // CreateAppReader is a Reader for the CreateApp structure.
@@ -24,37 +24,32 @@ type CreateAppReader struct {
 // ReadResponse reads a server response into the received o.
 func (o *CreateAppReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
-
 	case 200:
 		result := NewCreateAppOK()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return result, nil
-
 	case 400:
 		result := NewCreateAppBadRequest()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 401:
 		result := NewCreateAppUnauthorized()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	case 403:
 		result := NewCreateAppForbidden()
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
 		}
 		return nil, result
-
 	default:
-		return nil, runtime.NewAPIError("unknown error", response, response.Code())
+		return nil, runtime.NewAPIError("[POST /application] createApp", response, response.Code())
 	}
 }
 
@@ -63,7 +58,8 @@ func NewCreateAppOK() *CreateAppOK {
 	return &CreateAppOK{}
 }
 
-/*CreateAppOK handles this case with default header values.
+/*
+CreateAppOK describes a response with status code 200, with default header values.
 
 Ok
 */
@@ -71,8 +67,48 @@ type CreateAppOK struct {
 	Payload *models.Application
 }
 
+// IsSuccess returns true when this create app o k response has a 2xx status code
+func (o *CreateAppOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this create app o k response has a 3xx status code
+func (o *CreateAppOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create app o k response has a 4xx status code
+func (o *CreateAppOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this create app o k response has a 5xx status code
+func (o *CreateAppOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create app o k response a status code equal to that given
+func (o *CreateAppOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the create app o k response
+func (o *CreateAppOK) Code() int {
+	return 200
+}
+
 func (o *CreateAppOK) Error() string {
-	return fmt.Sprintf("[POST /application][%d] createAppOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppOK %s", 200, payload)
+}
+
+func (o *CreateAppOK) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppOK %s", 200, payload)
+}
+
+func (o *CreateAppOK) GetPayload() *models.Application {
+	return o.Payload
 }
 
 func (o *CreateAppOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -92,7 +128,8 @@ func NewCreateAppBadRequest() *CreateAppBadRequest {
 	return &CreateAppBadRequest{}
 }
 
-/*CreateAppBadRequest handles this case with default header values.
+/*
+CreateAppBadRequest describes a response with status code 400, with default header values.
 
 Bad Request
 */
@@ -100,8 +137,48 @@ type CreateAppBadRequest struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create app bad request response has a 2xx status code
+func (o *CreateAppBadRequest) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create app bad request response has a 3xx status code
+func (o *CreateAppBadRequest) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create app bad request response has a 4xx status code
+func (o *CreateAppBadRequest) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create app bad request response has a 5xx status code
+func (o *CreateAppBadRequest) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create app bad request response a status code equal to that given
+func (o *CreateAppBadRequest) IsCode(code int) bool {
+	return code == 400
+}
+
+// Code gets the status code for the create app bad request response
+func (o *CreateAppBadRequest) Code() int {
+	return 400
+}
+
 func (o *CreateAppBadRequest) Error() string {
-	return fmt.Sprintf("[POST /application][%d] createAppBadRequest  %+v", 400, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppBadRequest %s", 400, payload)
+}
+
+func (o *CreateAppBadRequest) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppBadRequest %s", 400, payload)
+}
+
+func (o *CreateAppBadRequest) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateAppBadRequest) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -121,7 +198,8 @@ func NewCreateAppUnauthorized() *CreateAppUnauthorized {
 	return &CreateAppUnauthorized{}
 }
 
-/*CreateAppUnauthorized handles this case with default header values.
+/*
+CreateAppUnauthorized describes a response with status code 401, with default header values.
 
 Unauthorized
 */
@@ -129,8 +207,48 @@ type CreateAppUnauthorized struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create app unauthorized response has a 2xx status code
+func (o *CreateAppUnauthorized) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create app unauthorized response has a 3xx status code
+func (o *CreateAppUnauthorized) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create app unauthorized response has a 4xx status code
+func (o *CreateAppUnauthorized) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create app unauthorized response has a 5xx status code
+func (o *CreateAppUnauthorized) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create app unauthorized response a status code equal to that given
+func (o *CreateAppUnauthorized) IsCode(code int) bool {
+	return code == 401
+}
+
+// Code gets the status code for the create app unauthorized response
+func (o *CreateAppUnauthorized) Code() int {
+	return 401
+}
+
 func (o *CreateAppUnauthorized) Error() string {
-	return fmt.Sprintf("[POST /application][%d] createAppUnauthorized  %+v", 401, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppUnauthorized %s", 401, payload)
+}
+
+func (o *CreateAppUnauthorized) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppUnauthorized %s", 401, payload)
+}
+
+func (o *CreateAppUnauthorized) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateAppUnauthorized) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -150,7 +268,8 @@ func NewCreateAppForbidden() *CreateAppForbidden {
 	return &CreateAppForbidden{}
 }
 
-/*CreateAppForbidden handles this case with default header values.
+/*
+CreateAppForbidden describes a response with status code 403, with default header values.
 
 Forbidden
 */
@@ -158,8 +277,48 @@ type CreateAppForbidden struct {
 	Payload *models.Error
 }
 
+// IsSuccess returns true when this create app forbidden response has a 2xx status code
+func (o *CreateAppForbidden) IsSuccess() bool {
+	return false
+}
+
+// IsRedirect returns true when this create app forbidden response has a 3xx status code
+func (o *CreateAppForbidden) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this create app forbidden response has a 4xx status code
+func (o *CreateAppForbidden) IsClientError() bool {
+	return true
+}
+
+// IsServerError returns true when this create app forbidden response has a 5xx status code
+func (o *CreateAppForbidden) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this create app forbidden response a status code equal to that given
+func (o *CreateAppForbidden) IsCode(code int) bool {
+	return code == 403
+}
+
+// Code gets the status code for the create app forbidden response
+func (o *CreateAppForbidden) Code() int {
+	return 403
+}
+
 func (o *CreateAppForbidden) Error() string {
-	return fmt.Sprintf("[POST /application][%d] createAppForbidden  %+v", 403, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppForbidden %s", 403, payload)
+}
+
+func (o *CreateAppForbidden) String() string {
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /application][%d] createAppForbidden %s", 403, payload)
+}
+
+func (o *CreateAppForbidden) GetPayload() *models.Error {
+	return o.Payload
 }
 
 func (o *CreateAppForbidden) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
